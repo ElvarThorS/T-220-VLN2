@@ -1,23 +1,19 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
 # Create your views here.
 def index(request):
-    return HttpResponse('Hello from index view in firesale app')
+    return render(request, 'firesale/index.html')
 
 
 def login(request):
-    return HttpResponse('Here you will login')
+    return render(request, 'firesale/login.html')
 
 
 def register(request):
-    return HttpResponse('Here you will register a new account')
+    return render(request, 'firesale/register.html')
 
 
 def dashboard(request):
-    return HttpResponse('Dashboard will be here')
+    return render(request, 'firesale/dashboard.html')
 
-
-def edit_profile(request):
-    return HttpResponse('Here you will be able to edit your profile')
