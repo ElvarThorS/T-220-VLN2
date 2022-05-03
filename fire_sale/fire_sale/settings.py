@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'firesale'
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,11 @@ WSGI_APPLICATION = 'fire_sale.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'firesale-db',
+        'USER': 'postgres',
+        'PASSWORD': 'abc12345',
+        'HOST': '34.142.72.163',
+        'PORT': '5432'
     }
 }
 
