@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from .forms import RegisterForm
 
 
 # Create your views here.
@@ -19,7 +20,8 @@ def register(request):
             form.save()
             return redirect('/login')
     return render(request, 'firesale/register.html', {
-        'form': UserCreationForm()
+        'form': UserCreationForm(),
+        'form_class': RegisterForm
     })
 
 @login_required
