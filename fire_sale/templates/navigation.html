@@ -11,6 +11,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             </ul>
+            {% if user.is_authenticated %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <form class="d-flex pull-left">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -32,6 +33,20 @@
                     </ul>
                 </li>
             </ul>
+            {% else %}
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form action="{% url 'login' %}">
+                        <input class="btn btn-outline-primary" type="submit" value="Log in"/>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="{% url 'register' %}">
+                        <input class="btn btn-outline-secondary" type="submit" value="Sign up"/>
+                    </form>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </nav>
