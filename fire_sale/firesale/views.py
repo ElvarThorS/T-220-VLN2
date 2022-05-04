@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
@@ -11,9 +13,15 @@ def login(request):
 
 
 def register(request):
-    return render(request, 'firesale/register.html')
+    if request.method == 'POST':
+        form = UserCreationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    return render(request, 'firesale/register.html', {
+        'form': UserCreationForm()
+    })
 
-
+@login_required
 def dashboard(request):
     return render(request, 'firesale/dashboard.html')
-
