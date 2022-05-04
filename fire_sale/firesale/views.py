@@ -17,7 +17,7 @@ def register(request):
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('/login')
     return render(request, 'firesale/register.html', {
         'form': UserCreationForm()
     })
