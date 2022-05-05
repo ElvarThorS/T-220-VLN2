@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div class="container">
     <h2>Register</h2>
     <div class="form-group">
         <form method="post" class="form form-horizontal">
@@ -26,5 +27,6 @@
             <br>
             <p>Already a member? <a href="{% url 'login' %}">Sign in here</a></p>
         </form>
+    </div>
     </div>
 {% endblock %}
