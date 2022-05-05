@@ -26,6 +26,8 @@ urlpatterns = [
     path('register/', views.register, name="register"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('login/', LoginView.as_view(template_name='firesale/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(next_page='/login'), name="logout")
-
+    path('logout/', LogoutView.as_view(next_page='/login'), name="logout"),
+    path('inbox/', views.inbox, name="inbox"),
+    path('my-items/', views.my_items, name="my-items"),
+    path('edit-profile/', views.edit_profile, name="edit-profile")
 ]
