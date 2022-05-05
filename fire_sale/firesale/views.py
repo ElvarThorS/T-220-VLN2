@@ -21,7 +21,7 @@ def register(request):
             form.save()
             return redirect('/login')
     return render(request, 'firesale/register.html', {
-        'form': UserCreationForm()
+        'form': UserCreationForm(),
     })
 
 @login_required
@@ -42,3 +42,11 @@ def dashboard(request):
 def dashboard(request):
     return render(request, 'firesale/dashboard.html')
 '''
+def inbox(request):
+    return render(request, 'firesale/inbox.html')
+
+def my_items(request):
+    return render(request, 'firesale/my_items.html')
+
+def edit_profile(request):
+    return render(request, 'firesale/edit_profile.html')
