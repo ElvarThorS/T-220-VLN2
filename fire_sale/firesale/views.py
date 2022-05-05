@@ -17,8 +17,13 @@ def login(request):
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(data=request.POST)
+        print("FORM META:", form.model)
+        #user_info = models.User()
         if form.is_valid():
+            #user = User(data={})
             form.save()
+
+            print("FORM:", form.data)
             return redirect('/login')
     return render(request, 'firesale/register.html', {
         'form': UserCreationForm(),
@@ -34,7 +39,7 @@ def dashboard(request):
 
     else:
         form = ItemForm()
-    return render(request, 'fire_sale/dashboard.html', {
+    return render(request, 'firesale/dashboard.html', {
         'form': form
     })
 '''
