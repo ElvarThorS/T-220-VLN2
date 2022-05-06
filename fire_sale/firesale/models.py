@@ -9,7 +9,7 @@ class PersonalInformation(models.Model):
     auth_user = models.ForeignKey(auth_models.User, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=255)
     bio = models.CharField(max_length=8192)
-    user_image = models.ForeignKey(Image, on_delete=models.CASCADE, default=None)
+    user_image = models.ForeignKey(Image, on_delete=models.CASCADE, default=None, blank=True)
 
 class Item(models.Model):
     name = models.CharField(max_length=255)

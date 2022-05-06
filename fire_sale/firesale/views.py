@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import ItemForm
+from firesale.forms.personal_form import PersonalForm
 from . import models
 
 
@@ -17,13 +18,15 @@ def login(request):
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(data=request.POST)
-        print("FORM META:", form.model)
-        #user_info = models.User()
-        if form.is_valid():
-            #user = User(data={})
-            form.save()
 
-            print("FORM:", form.data)
+
+        if form.is_valid():
+
+            saved = form.save()
+            personal = models.PersonalInformation(name=saved.username, bio='', auth_user_id=saved.id, user_image_id=0)
+            print("Personal save:", personal)
+            personal.save()
+            print("SAVED:", saved.id)
             return redirect('/login')
     return render(request, 'firesale/register.html', {
         'form': UserCreationForm(),
@@ -47,11 +50,15 @@ def dashboard(request):
 def dashboard(request):
     return render(request, 'firesale/dashboard.html')
 '''
+
+@login_required
 def inbox(request):
     return render(request, 'firesale/inbox.html')
 
+@login_required
 def my_items(request):
     return render(request, 'firesale/my_items.html')
 
+@login_required
 def edit_profile(request):
     return render(request, 'firesale/edit_profile.html')

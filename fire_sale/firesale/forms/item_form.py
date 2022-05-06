@@ -13,5 +13,4 @@ class ItemForm(ModelForm):
             #'seller': widgets.TextInput(attrs={'class': 'form-control'}),
             'description': widgets.TextInput(attrs={'class': 'form-control'}),
             'condition': widgets.TextInput(attrs={'class': 'form-control'}),
-
         }
