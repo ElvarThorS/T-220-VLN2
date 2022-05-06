@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from firesale.forms.item_form import ItemForm
+from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
+
 from . import models
 
 
@@ -35,13 +36,13 @@ def register(request):
 @login_required
 def dashboard(request):
     if request.method == 'POST':
-        form = ItemForm(data=request.POST)
+        form = CreateItemForm(data=request.POST)
         if form.is_valid():
             form.save()
             seller = request.user
 
     else:
-        form = ItemForm()
+        form = CreateItemForm()
     return render(request, 'firesale/dashboard.html', {
         'form': form
     })

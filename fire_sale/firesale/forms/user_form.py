@@ -1,6 +1,7 @@
 from django.forms import ModelForm, widgets
 from firesale.models import User
 
+
 class UserEditForm(ModelForm):
     class Meta:
         model = User
