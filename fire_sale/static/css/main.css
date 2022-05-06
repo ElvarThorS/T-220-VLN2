@@ -8,21 +8,41 @@
 .items {
     display:flex;
     flex-wrap:wrap;
-    align-content: center;
+    justify-content: center;
+    align-content: space-between;
     padding: 1em;
-    border: solid 2px rgba(155, 155, 155, .5);
 }
 
 .item {
-    border: 2px solid black;
-    display: inline-block;
-    width: 30%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-basis: auto;
+    width: 33%;
     height: auto;
-    margin: 1em;
+    margin: 0.1em;
     padding: 1em;
+    text-decoration: none;
+    border-radius: 10%;
 }
 
 .item-img{
-    height: auto;
-    width: 20em;
+    height: 20em;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10%;
+}
+
+.item-name {
+    color: black;
+    margin-top: 0.5em;
+    margin-bottom: -0.5em;
+}
+
+.item-description {
+    color:black;
+    margin-top: -1em;
 }
