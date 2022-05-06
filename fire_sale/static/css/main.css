@@ -1,6 +1,12 @@
 .index {
+    background-color: aqua;
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 .login{
     border: 2px solid red;
+}
+
+.items {
+    background-color: aqua;
+    border: solid 2px rgba(155, 155, 155, .5);
 }

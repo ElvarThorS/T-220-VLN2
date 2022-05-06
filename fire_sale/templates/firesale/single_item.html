@@ -1,3 +1,7 @@
 <div class="well item">
-  {{item}}
+    <a href="#">
+        <img class="item-img" src="{{ item.itemimage_set.first.image.url }}">
+        <h4>{{ item.name }}</h4>
+        <p>{{ item.description }}</p>
+    </a>
 </div>
