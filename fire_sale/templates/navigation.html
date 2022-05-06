@@ -21,7 +21,7 @@
             {% if user.is_authenticated %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <form class="d-flex pull-left">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" value="{{search}}">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 <li class="nav-item dropdown">

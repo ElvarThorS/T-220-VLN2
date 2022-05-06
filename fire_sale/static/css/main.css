@@ -26,3 +26,7 @@
     height: auto;
     width: 20em;
 }
+
+.sidebar-color {
+  background: #52A69A !important;
+}

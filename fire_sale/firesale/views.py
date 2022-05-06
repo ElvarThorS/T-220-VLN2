@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
-from firesale.models import Item, ItemImage, Image
+from firesale.models import Item, ItemImage, Image, Message
 
 from . import models
 
@@ -32,8 +32,10 @@ def register(request):
 
 @login_required
 def dashboard(request):
+    search = None
+    sortby = None
+    title = 'Items for sale:'
     if request.method == 'POST':
-        print("REQUEST USER:", request.user.id)
         post = request.POST
         autouser = User()
         autouser.id = request.user.id
@@ -56,21 +58,24 @@ def dashboard(request):
             image = Image(url=post['image'])
             image.save()
             item_image = ItemImage(image=image, item=item)
-
             item_image.save()
-
-
-
     else:
+        if request.method == 'GET' and 'search' in request.GET:
+            search = request.GET['search']
         form = CreateItemForm()
     return render(request, 'firesale/dashboard.html', {
+        'title': title,
+        'search': search or '',
         'form': form,
-        'items': Item.objects.all()
+        'items': Item.objects.filter(name__icontains=search) if search else Item.objects.all()
     })
 
 @login_required
 def inbox(request):
-    return render(request, 'firesale/inbox.html')
+    messages = Message.objects.filter(to=request.user.id)
+    return render(request, 'firesale/inbox.html', {
+        'messages': messages
+    })
 
 @login_required
 def my_items(request):
@@ -82,9 +87,10 @@ def my_items(request):
 
     else:
         form = CreateItemForm()
-    return render(request, 'firesale/my_items.html', {
+    return render(request, 'firesale/dashboard.html', {
+        'title': 'My Items:',
         'form': form,
-        'items': None
+        'items': Item.objects.filter(seller=request.user.id),
     })
 
 @login_required
