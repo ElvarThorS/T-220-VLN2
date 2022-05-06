@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
-from firesale.models import Item
+from firesale.models import Item, ItemImage, Image
 
 from . import models
 
@@ -52,7 +52,13 @@ def dashboard(request):
             'seller': autouser,
         })
         if form.is_valid():
-            form.save()
+            item = form.save()
+            image = Image(url=post['image'])
+            image.save()
+            item_image = ItemImage(image=image, item=item)
+
+            item_image.save()
+
 
 
     else:

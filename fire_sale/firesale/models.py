@@ -43,5 +43,3 @@ class Offer(models.Model):
 class Message(models.Model):
     to = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
     message = models.CharField(max_length=8192)
-
-
