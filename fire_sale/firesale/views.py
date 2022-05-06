@@ -58,7 +58,17 @@ def inbox(request):
 
 @login_required
 def my_items(request):
-    return render(request, 'firesale/my_items.html')
+    if request.method == 'POST':
+        form = CreateItemForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            seller = request.user
+
+    else:
+        form = CreateItemForm()
+    return render(request, 'firesale/my_items.html', {
+        'form': form
+    })
 
 @login_required
 def edit_profile(request):
