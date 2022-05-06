@@ -3,6 +3,12 @@
     {% include 'sidebar.html' %}
     <div class="col py-3">
             Dashboard
+            <h4>Items for sale:</h4>
+            <div class="items">
+                {% for item in items %}
+                  {% include 'firesale/single_item.html' with item=item %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

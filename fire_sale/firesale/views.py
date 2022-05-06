@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
+from firesale.models import Item
 
 from . import models
 
@@ -20,15 +21,10 @@ def login(request):
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(data=request.POST)
-
-
         if form.is_valid():
-
             saved = form.save()
             personal = models.PersonalInformation(name=saved.username, bio='', auth_user_id=saved.id, user_image_id=0)
-            print("Personal save:", personal)
             personal.save()
-            print("SAVED:", saved.id)
             return redirect('/login')
     return render(request, 'firesale/register.html', {
         'form': UserCreationForm(),
@@ -62,7 +58,8 @@ def dashboard(request):
     else:
         form = CreateItemForm()
     return render(request, 'firesale/dashboard.html', {
-        'form': form
+        'form': form,
+        'items': Item.objects.all()
     })
 
 @login_required
@@ -80,7 +77,8 @@ def my_items(request):
     else:
         form = CreateItemForm()
     return render(request, 'firesale/my_items.html', {
-        'form': form
+        'form': form,
+        'items': None
     })
 
 @login_required
