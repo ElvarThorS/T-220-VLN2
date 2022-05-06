@@ -1,5 +1,4 @@
 .index {
-    background-color: aqua;
     border-bottom: solid 2px rgba(155, 155, 155, .5);
 }
 .login{
@@ -7,6 +6,23 @@
 }
 
 .items {
-    background-color: aqua;
+    display:flex;
+    flex-wrap:wrap;
+    align-content: center;
+    padding: 1em;
     border: solid 2px rgba(155, 155, 155, .5);
+}
+
+.item {
+    border: 2px solid black;
+    display: inline-block;
+    width: 30%;
+    height: auto;
+    margin: 1em;
+    padding: 1em;
+}
+
+.item-img{
+    height: auto;
+    width: 20em;
 }
