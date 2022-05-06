@@ -10,6 +10,8 @@ class Image(models.Model):
 
 class Condition(models.Model):
     condition = models.CharField(max_length=255)
+    def __str__(self):
+        return self.condition
 
 
 class PersonalInformation(models.Model):
