@@ -96,3 +96,7 @@ def my_items(request):
 @login_required
 def edit_profile(request):
     return render(request, 'firesale/edit_profile.html')
+
+@login_required
+def item(request):
+    return render(request, 'firesale/item.html')
