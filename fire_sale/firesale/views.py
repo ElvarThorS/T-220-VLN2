@@ -121,5 +121,5 @@ def item(request, item_id):
     return render(request, 'firesale/item.html', {
         'item': item,
         'images': images,
-        'seller': User.objects.filter(id=item.seller_id).first()
+        'offer': Offer.objects.filter(item_id=item.id).first()
     })
