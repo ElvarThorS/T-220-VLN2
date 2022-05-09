@@ -5,6 +5,9 @@
             <h2>Item site</h2>
             <p>Item description.... blah</p>
             <h4>{{item.name}}</h4>
+            {% for image in images %}
+              <img src="{{image}}" />
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

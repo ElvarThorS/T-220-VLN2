@@ -100,6 +100,14 @@ def edit_profile(request):
 
 @login_required
 def item(request, item_id):
+    item_images = ItemImage.objects.filter(item_id=item_id)
+    images = []
+    for item_image in item_images:
+
+        image_filter = Image.objects.filter(id=item_image.image_id)
+        for image in image_filter:
+            images.append(image.url)
     return render(request, 'firesale/item.html', {
-        'item': Item.objects.filter(id=item_id).first()
+        'item': Item.objects.filter(id=item_id).first(),
+        'images': images,
     })
