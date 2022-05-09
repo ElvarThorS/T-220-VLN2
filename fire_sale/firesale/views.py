@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
-from firesale.models import Item, ItemImage, Image, Message, Offer
+from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
 
 from . import models
 
@@ -67,17 +67,21 @@ def dashboard(request):
     related = items.select_related()
 
     offers = []
-    print("Items:", items)
+    #print("PersonalInformation:", request.user.PersonalInformation)
     for relate in items:
         offers = Offer.objects.filter(item_id=relate.id)
         for offer in offers:
             print(offer.price)
+
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
 
     return render(request, 'firesale/dashboard.html', {
         'title': title,
         'search': search or '',
         'form': form,
         'items': items,
+        'personal_info': personal_info,
+
     })
 
 @login_required
@@ -112,7 +116,7 @@ def edit_profile(request):
 def item(request, item_id):
     if request.method == 'POST':
         post = request.POST
-        
+
     else:
         item_images = ItemImage.objects.filter(item_id=item_id)
         images = []

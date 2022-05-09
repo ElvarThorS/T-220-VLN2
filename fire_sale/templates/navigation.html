@@ -43,8 +43,8 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" height="36"></a>
                     <ul class="dropdown-menu dropdown-menu-end w-50 p-3" aria-labelledby="navbarDropdown">
                         <li><p class="dropdown-item">{{ request.user }}</p></li>
-                        <small class="dropdown-item list-inline-item">{{ request.user.PersonalInformation }}</small>
-                        <small class="dropdown-item list-inline-item">Bio</small>
+                        <small class="dropdown-item list-inline-item">{{ personal_info.bio }}</small>
+                        <!--<small class="dropdown-item list-inline-item">{{ request.user.PersonalInformation.bio }}</small>-->
                         <hr>
                         <li><p class="dropdown-item">Average grade: ???</p></li>
                         <hr>
