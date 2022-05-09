@@ -30,9 +30,5 @@ urlpatterns = [
     path('inbox/', views.inbox, name="inbox"),
     path('my-items/', views.my_items, name="my-items"),
     path('edit-profile/', views.edit_profile, name="edit-profile"),
-<<<<<<< HEAD
     path('item/<item_id>/', views.item, name='item')
-=======
-    path('item/', views.item, name="item")
->>>>>>> 1aeb3d4808574489ffca3afba9cd2504a65b8964
 ]

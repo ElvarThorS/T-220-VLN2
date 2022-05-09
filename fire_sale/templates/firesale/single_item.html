@@ -1,4 +1,4 @@
-<a class="well item bg-white" href="{% url 'item' %}">
+<a class="well item bg-white" href="/item/{{item.id}}">
     <img class="item-img" src="{{ item.itemimage_set.first.image.url }}">
     <h4 class="item-name">{{ item.name }}</h4>
     <hr>
