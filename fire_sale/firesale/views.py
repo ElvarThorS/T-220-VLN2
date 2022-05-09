@@ -96,3 +96,10 @@ def my_items(request):
 @login_required
 def edit_profile(request):
     return render(request, 'firesale/edit_profile.html')
+
+
+@login_required
+def item(request, item_id):
+    return render(request, 'firesale/item.html', {
+        'item': Item.objects.filter(id=item_id).first()
+    })
