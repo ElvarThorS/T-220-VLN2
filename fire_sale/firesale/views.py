@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
-from firesale.models import Item, ItemImage, Image, Message
+from firesale.models import Item, ItemImage, Image, Message, Offer
 
 from . import models
 
@@ -111,5 +111,5 @@ def item(request, item_id):
     return render(request, 'firesale/item.html', {
         'item': item,
         'images': images,
-        'seller': User.objects.filter(id=item.seller_id).first()
+        'offer': Offer.objects.filter(item_id=item.id).first()
     })

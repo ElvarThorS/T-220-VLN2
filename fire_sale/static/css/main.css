@@ -46,3 +46,16 @@
     color:black;
     margin-top: -1em;
 }
+
+.item-detail-img{
+    height: 15em;
+    width: auto;
+    object-fit: cover;
+    display: block;
+    margin-right: 1em;
+    border-radius: 5%;
+}
+
+.offer-input-bar {
+    width: 25%;
+}
