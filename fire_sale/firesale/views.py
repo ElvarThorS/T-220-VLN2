@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
+from firesale.forms.offer_form import OfferForm
 from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
 
 from . import models
@@ -75,6 +76,7 @@ def dashboard(request):
 
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
 
+
     return render(request, 'firesale/dashboard.html', {
         'title': title,
         'search': search or '',
@@ -100,7 +102,6 @@ def my_items(request):
         if form.is_valid():
             form.save()
             seller = request.user
-
     else:
         form = CreateItemForm()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
@@ -121,21 +122,40 @@ def edit_profile(request):
 
 @login_required
 def item(request, item_id):
+    images = []
     if request.method == 'POST':
         post = request.POST
+        form = OfferForm(data={
+            'item': Item.objects.filter(id=item_id).first(),
+            'is_accepted': False,
+            'user_offering': request.user,
+            'price': post['price'],
+        })
+        print("FORM:", form)
+        if form.is_valid():
+            form.save()
+            return redirect('/dashboard')
 
     else:
         item_images = ItemImage.objects.filter(item_id=item_id)
-        images = []
+
         for item_image in item_images:
             image_filter = Image.objects.filter(id=item_image.image_id)
             for image in image_filter:
                 images.append(image.url)
-        item = Item.objects.filter(id=item_id).first()
-        personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
-        return render(request, 'firesale/item.html', {
-            'item': item,
-            'images': images,
-            'offer': Offer.objects.filter(item_id=item.id).first(),
-            'personal_info': personal_info
+
+        form = OfferForm(initial={
+            'item': Item.objects.filter(id=item_id).first(),
+            'is_accepted': 0,
+            'user_offering': request.user
         })
+    item = Item.objects.filter(id=item_id).first()
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+
+    return render(request, 'firesale/item.html', {
+        'item': item,
+        'images': images,
+        'offer': Offer.objects.filter(item_id=item.id).first(),
+        'personal_info': personal_info,
+        'form': form,
+    })
