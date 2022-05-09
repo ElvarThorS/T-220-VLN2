@@ -107,7 +107,9 @@ def item(request, item_id):
         image_filter = Image.objects.filter(id=item_image.image_id)
         for image in image_filter:
             images.append(image.url)
+    item = Item.objects.filter(id=item_id).first()
     return render(request, 'firesale/item.html', {
-        'item': Item.objects.filter(id=item_id).first(),
+        'item': item,
         'images': images,
+        'seller': User.objects.filter(id=item.seller_id).first()
     })
