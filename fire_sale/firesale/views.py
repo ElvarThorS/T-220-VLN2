@@ -87,8 +87,10 @@ def dashboard(request):
 @login_required
 def inbox(request):
     messages = Message.objects.filter(to=request.user.id)
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     return render(request, 'firesale/inbox.html', {
-        'messages': messages
+        'messages': messages,
+        'personal_info': personal_info
     })
 
 @login_required
@@ -101,7 +103,9 @@ def my_items(request):
 
     else:
         form = CreateItemForm()
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     return render(request, 'firesale/dashboard.html', {
+        'personal_info': personal_info,
         'title': 'My Items:',
         'form': form,
         'items': Item.objects.filter(seller=request.user.id),
@@ -109,7 +113,10 @@ def my_items(request):
 
 @login_required
 def edit_profile(request):
-    return render(request, 'firesale/edit_profile.html')
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    return render(request, 'firesale/edit_profile.html' {
+        'personal_info': personal_info,
+    })
 
 
 @login_required
@@ -125,8 +132,10 @@ def item(request, item_id):
             for image in image_filter:
                 images.append(image.url)
         item = Item.objects.filter(id=item_id).first()
+        personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         return render(request, 'firesale/item.html', {
             'item': item,
             'images': images,
-            'offer': Offer.objects.filter(item_id=item.id).first()
+            'offer': Offer.objects.filter(item_id=item.id).first(),
+            'personal_info': personal_info
         })
