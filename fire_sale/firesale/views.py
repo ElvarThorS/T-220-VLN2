@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
-from firesale.models import Item, ItemImage, Image, Message
+from firesale.models import Item, ItemImage, Image, Message, Offer
 
 from . import models
 
@@ -63,11 +63,21 @@ def dashboard(request):
         if request.method == 'GET' and 'search' in request.GET:
             search = request.GET['search']
         form = CreateItemForm()
+    items = Item.objects.filter(name__icontains=search) if search else Item.objects.all()
+    related = items.select_related()
+
+    offers = []
+    print("Items:", items)
+    for relate in items:
+        offers = Offer.objects.filter(item_id=relate.id)
+        for offer in offers:
+            print(offer.price)
+
     return render(request, 'firesale/dashboard.html', {
         'title': title,
         'search': search or '',
         'form': form,
-        'items': Item.objects.filter(name__icontains=search) if search else Item.objects.all()
+        'items': items,
     })
 
 @login_required
