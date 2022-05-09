@@ -114,7 +114,7 @@ def my_items(request):
 @login_required
 def edit_profile(request):
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
-    return render(request, 'firesale/edit_profile.html' {
+    return render(request, 'firesale/edit_profile.html', {
         'personal_info': personal_info,
     })
 
