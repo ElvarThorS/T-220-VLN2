@@ -7,7 +7,7 @@
             <p class="">{{ item.description }}</p>
             <p>Seller: {{ item.seller }}</p>
             <p>Current offer amount: {{ offer }}</p>
-            <form class="d-flex pull-left">
+            <form class="d-flex pull-left" method="POST">
                 <input class="form-control me-2 offer-input-bar" type="number" name="offer-input" placeholder="Offer amount" aria-label="offer-input" value="Offer amount">
                 <button class="btn btn-outline-primary" type="submit">Place offer</button>
             </form>

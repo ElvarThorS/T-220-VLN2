@@ -110,16 +110,19 @@ def edit_profile(request):
 
 @login_required
 def item(request, item_id):
-    item_images = ItemImage.objects.filter(item_id=item_id)
-    images = []
-    for item_image in item_images:
-
-        image_filter = Image.objects.filter(id=item_image.image_id)
-        for image in image_filter:
-            images.append(image.url)
-    item = Item.objects.filter(id=item_id).first()
-    return render(request, 'firesale/item.html', {
-        'item': item,
-        'images': images,
-        'offer': Offer.objects.filter(item_id=item.id).first()
-    })
+    if request.method == 'POST':
+        post = request.POST
+        
+    else:
+        item_images = ItemImage.objects.filter(item_id=item_id)
+        images = []
+        for item_image in item_images:
+            image_filter = Image.objects.filter(id=item_image.image_id)
+            for image in image_filter:
+                images.append(image.url)
+        item = Item.objects.filter(id=item_id).first()
+        return render(request, 'firesale/item.html', {
+            'item': item,
+            'images': images,
+            'offer': Offer.objects.filter(item_id=item.id).first()
+        })
