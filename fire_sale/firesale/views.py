@@ -108,11 +108,24 @@ def my_items(request):
     else:
         form = CreateItemForm()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+
+    items = Item.objects.filter(seller=request.user.id)
+    related = items.select_related()
+
+    __offers = {}
+    #print("PersonalInformation:", request.user.PersonalInformation)
+    for relate in items:
+        offers = Offer.objects.filter(item_id=relate.id)
+        __offers[relate] = offers.aggregate(Max('price'))['price__max'] or 'No offers yet.'
+
+
+
     return render(request, 'firesale/dashboard.html', {
         'personal_info': personal_info,
         'title': 'My Items:',
         'form': form,
-        'items': Item.objects.filter(seller=request.user.id),
+        'offers': __offers,
+        'items': items,
     })
 
 @login_required
