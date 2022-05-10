@@ -72,7 +72,7 @@ def dashboard(request):
     #print("PersonalInformation:", request.user.PersonalInformation)
     for relate in items:
         offers = Offer.objects.filter(item_id=relate.id)
-        __offers[relate] = offers.aggregate(Max('price'))
+        __offers[relate] = offers.aggregate(Max('price'))['price__max'] or 'No offers yet.'
 
 
 
