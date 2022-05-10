@@ -2,6 +2,10 @@
 {% block content %}
     <div class="container">
         <div class="index">
+            {% if item.seller.id == user.id %}
+            
+            <h1>MY OWN ITEM</h1>
+            {% else %}
             <h2 class="border-bottom">{{ item.name }}</h2>
             <p class="">{{ item.description }}</p>
             <p>Seller: {{ item.seller }}</p>
@@ -17,7 +21,7 @@
                     <img class="img-thumbnail item-detail-img" src="{{image}}" />
                 {% endfor %}
             </div>
-
+            {% endif %}
         </div>
     </div>
 {% endblock %}
