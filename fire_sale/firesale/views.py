@@ -167,11 +167,13 @@ def item(request, item_id):
         })
     item = Item.objects.filter(id=item_id).first()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    offers = Offer.objects.filter(item_id=item.id)
 
     return render(request, 'firesale/item.html', {
         'item': item,
         'images': images,
-        'offer': Offer.objects.filter(item_id=item.id).first(),
+        'offer': offers.aggregate(Max('price'))['price__max'],
+        'offers': offers,
         'personal_info': personal_info,
         'form': form,
     })

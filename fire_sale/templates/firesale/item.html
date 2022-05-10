@@ -2,26 +2,29 @@
 {% block content %}
     <div class="container">
         <div class="index">
-            {% if item.seller.id == user.id %}
-            
-            <h1>MY OWN ITEM</h1>
-            {% else %}
-            <h2 class="border-bottom">{{ item.name }}</h2>
-            <p class="">{{ item.description }}</p>
-            <p>Seller: {{ item.seller }}</p>
-            <p>Current offer amount: {{ offer }}</p>
+          <h2 class="border-bottom">{{ item.name }}</h2>
+          <p class="">{{ item.description }}</p>
+          <p>Seller: {{ item.seller }}</p>
+          <p>Current offer amount: {{ offer }}</p>
+          {% if item.seller.id == user.id %}
+            {% for offer in offers %}
+              <!-- Hér er hægt að geta lista yfir tilboð -->
+              <p>Offer: {{ offer }}</p>
+            {% endfor %}
+          {% else %}
             <form class="d-flex pull-left" method="POST">
                 <!--<input class="form-control me-2 offer-input-bar" type="number" name="offer-input" placeholder="Offer amount" aria-label="offer-input" value="Offer amount">-->
                 {% csrf_token %}
                 {{ form }}
                 <button class="btn btn-outline-primary" type="submit">Place offer</button>
             </form>
-            <div class="items">
-                {% for image in images %}
-                    <img class="img-thumbnail item-detail-img" src="{{image}}" />
-                {% endfor %}
-            </div>
-            {% endif %}
+
+          {% endif %}
+          <div class="items">
+              {% for image in images %}
+                  <img class="img-thumbnail item-detail-img" src="{{image}}" />
+              {% endfor %}
+          </div>
         </div>
     </div>
 {% endblock %}
