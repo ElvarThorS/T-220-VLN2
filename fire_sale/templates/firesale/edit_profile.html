@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
-        <h2>Here you can edit your personal information</h2>
-        <form class="form form-horizontal" action="{% url 'edit-profile' id %}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0"/>
-
-        </form>
+    <div class="container-fluid">
+        <div class="row flex-nowrap border">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+                    <h2>Here you can edit your personal information</h2>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <form class="form form-horizontal" action="{% url 'edit-profile' id %}" method="post">
+                            {% csrf_token %}
+                            <li clas="nav-item">
+                                {{ form }}
+                            </li>
+                            <li>
+                                <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0"/>
+                            </li>
+                        </form>
+                    </ul>
+                </div>
+        </div>
     </div>
 {% endblock %}

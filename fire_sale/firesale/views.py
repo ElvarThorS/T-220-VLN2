@@ -136,7 +136,7 @@ def edit_profile(request, id):
         form = UpdatePersonalForm(data=request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('dashboard', id=id)
+            return redirect('dashboard')
         print(1)
     else:
         form = UpdatePersonalForm(instance=instance)
