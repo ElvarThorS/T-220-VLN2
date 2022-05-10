@@ -69,7 +69,26 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    border: 1px solid red;
+}
+
+.inbox-container {
+    display: flex;
+    justify-content: center;
+    width: auto;
+}
+
+.inbox-outer-container {
+    display: inline-block;
+    justify-content: center;
+}
+
+.message {
+    text-align: center;
+    text-decoration: none;
+}
+
+.inbox-container:nth-child(1){
+    display: block;
 }
 
 ----------------------

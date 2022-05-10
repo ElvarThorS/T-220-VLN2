@@ -38,6 +38,8 @@ class Offer(models.Model):
     price = models.IntegerField()
     user_offering = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
     is_accepted = models.BooleanField()
+    def __str__(self):
+        return str(self.price)
 
 
 class Message(models.Model):
