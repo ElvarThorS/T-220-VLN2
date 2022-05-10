@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.db.models import Max
 from firesale.forms.item_form import CreateItemForm
-from firesale.forms.personal_form import PersonalForm
+from firesale.forms.personal_form import PersonalForm, UpdatePersonalForm
 from firesale.forms.offer_form import OfferForm
 from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
+from django.shortcuts import get_object_or_404
 
 from . import models
 
@@ -129,10 +130,21 @@ def my_items(request):
     })
 
 @login_required
-def edit_profile(request):
+def edit_profile(request, id):
+    instance = get_object_or_404(PersonalInformation, auth_user_id=id)
+    if request.method == 'POST':
+        form = UpdatePersonalForm(data=request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard', id=id)
+        print(1)
+    else:
+        form = UpdatePersonalForm(instance=instance)
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     return render(request, 'firesale/edit_profile.html', {
         'personal_info': personal_info,
+        'form': form,
+        'id': id
     })
 
 

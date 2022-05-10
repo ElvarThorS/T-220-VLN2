@@ -14,3 +14,13 @@ class PersonalForm(ModelForm):
             'bio': widgets.TextInput(attrs={'class': 'form-control'}),
             #'user_image_id': widgets.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class UpdatePersonalForm(ModelForm):
+    class Meta:
+        model = PersonalInformation
+        exclude = ['id', 'auth_user_id']
+        widgets = {
+            'name': widgets.TextInput(attrs={'class': 'form-control'}),
+            'bio': widgets.Textarea(attrs={'class': 'form-control'})
+        }
