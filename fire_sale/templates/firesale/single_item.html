@@ -1,7 +1,7 @@
 <a class="well item bg-white" href="/item/{{item.id}}">
     <img class="item-img" src="{{ item.itemimage_set.first.image.url }}">
-    <h4 class="item-name">{{ item.name }}</h4>
-    <hr>
+    <h4 class="item-name border-bottom">{{ item.name }}</h4>
+    <br>
     <p class="item-description">{{ item.description }}</p>
     <p class="item-description">Current Price: {{ price }}kr.</p>
 </a>
