@@ -1,31 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-        <div class="index">
-          <h2 class="border-bottom">{{ item.name }}</h2>
-          <p class="">{{ item.description }}</p>
-          <p>Seller: {{ item.seller }}</p>
-          <p>Condition: {{ item.condition }}</p>
-          <p>Current offer amount: {{ offer }}</p>
-          {% if item.seller.id == user.id %}
-            {% for offer in offers %}
-              <!-- Hér er hægt að geta lista yfir tilboð -->
-              <p>Offer: {{ offer }}</p>
-            {% endfor %}
-          {% else %}
-            <form class="d-flex pull-left" method="POST">
-                <!--<input class="form-control me-2 offer-input-bar" type="number" name="offer-input" placeholder="Offer amount" aria-label="offer-input" value="Offer amount">-->
-                {% csrf_token %}
-                {{ form }}
-                <button class="btn btn-outline-primary" type="submit">Place offer</button>
-            </form>
-
-          {% endif %}
-          <div class="items">
-              {% for image in images %}
-                  <img class="img-thumbnail item-detail-img" src="{{image}}" />
-              {% endfor %}
-          </div>
+    <div class="my-item-main">
+        <h2 class="">{{ item.name }}</h2>
+        <p class="">{{ item.description }}</p>
+        <p>Seller: {{ item.seller }}</p>
+        <p>Condition: {{ item.condition }}</p>
+        <p>Current hightest offer amount: {{ offer }}</p>
+        <div class="items">
+          {% for image in images %}
+              <img class="img-thumbnail item-detail-img" src="{{image}}" />
+          {% endfor %}
         </div>
     </div>
+    {% if item.seller.id == user.id %}
+        <div class="my-item-sidebar">
+            <h4 class="">Offers</h4>
+            <ul class="list-group">
+                {% for offer in offers %}
+                    <!-- Hér er hægt að geta lista yfir tilboð -->
+                    <li class="list-group-item message">
+                        Offer: {{ offer }}<br>
+                        <button type="button" class="btn btn-outline-success">Accept</button>
+                        <button type="button" class="btn btn-outline-danger">Reject</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+         <form class="d-flex pull-left" method="POST">
+            <!--<input class="form-control me-2 offer-input-bar" type="number" name="offer-input" placeholder="Offer amount" aria-label="offer-input" value="Offer amount">-->
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-outline-primary" type="submit">Place offer</button>
+         </form>
+    {% endif %}
 {% endblock %}
