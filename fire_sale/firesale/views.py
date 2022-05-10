@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.db.models import Max
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm
 from firesale.forms.offer_form import OfferForm
@@ -67,12 +68,13 @@ def dashboard(request):
     items = Item.objects.filter(name__icontains=search) if search else Item.objects.all()
     related = items.select_related()
 
-    offers = []
+    __offers = {}
     #print("PersonalInformation:", request.user.PersonalInformation)
     for relate in items:
         offers = Offer.objects.filter(item_id=relate.id)
-        for offer in offers:
-            print(offer.price)
+        __offers[relate] = offers.aggregate(Max('price'))
+
+
 
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
 
@@ -82,6 +84,7 @@ def dashboard(request):
         'search': search or '',
         'form': form,
         'items': items,
+        'offers': __offers,
         'personal_info': personal_info,
 
     })

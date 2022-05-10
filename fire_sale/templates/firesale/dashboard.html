@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% include 'sidebar.html' %}
-    <div class="col py-3">
-            Dashboard
-            <h4>{{title}}</h4>
-            <div class="items">
-                {% for item in items %}
-                  {% include 'firesale/single_item.html' with item=item %}
-                {% endfor %}
-            </div>
-        </div>
+{% include 'sidebar.html' %}
+<div class="col py-3">
+    Dashboard
+    <h4>{{title}}</h4>
+    <div class="items">
+        {% for item in items %}
+
+          {% include 'firesale/single_item.html' with item=item price=offers %}
+        {% endfor %}
     </div>
 </div>
+
 {% endblock %}
