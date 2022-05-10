@@ -5,7 +5,7 @@
         <div class="inbox-container">
             <ul class="list-group">
               {% for message in messages %}
-                <li class="list-group-item message"><a class="message" href="#">{{message.message}}</a></li>
+                <li class="list-group-item message"><a class="message" href="/checkout/{{item.id}}">{{message.message}}</a></li>
               {% endfor %}
             </ul>
         </div>

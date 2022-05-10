@@ -162,3 +162,10 @@ def item(request, item_id):
         'personal_info': personal_info,
         'form': form,
     })
+
+@login_required
+def checkout(request, item_id):
+    item = Item.objects.filter(id=item_id).first()
+    return render(request, 'firesale/checkout.html', {
+        'item': item,
+    })

@@ -30,5 +30,6 @@ urlpatterns = [
     path('inbox/', views.inbox, name="inbox"),
     path('my-items/', views.my_items, name="my-items"),
     path('edit-profile/', views.edit_profile, name="edit-profile"),
-    path('item/<item_id>/', views.item, name='item')
+    path('item/<item_id>/', views.item, name='item'),
+    path('checkout/<item_id>/', views.checkout, name='checkout')
 ]
