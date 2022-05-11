@@ -227,7 +227,7 @@ def checkout(request, item_id):
 
             if action == 'accept':
                 rejected_offers = Offer.objects.filter(item_id=item_id).exclude(id=offer_id)
-                accept_msg = Message(to=offerer, message=f'Your offer on <a href="/checkout/{item_id}/">{item.name}</a> has been accepted!')
+                accept_msg = Message(to=offerer, message=f'Your offer on {item.name} has been accepted! %{item_id}')
                 for rejection in rejected_offers:
                     reject_msg = Message(to=User.objects.filter(id=rejection.user_offering.id).first(), message=f'Your offer on {item.name} has been rejected!')
                     reject_msg.save()

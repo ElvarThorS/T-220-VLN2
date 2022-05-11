@@ -1,11 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="inbox-outer-container">
+        <script>
+          let a;
+          function replace_link(str, ptag) {
+              const regex = /%(\d+)/gm;
+              let m;
+              let s;
+              let old_match;
+              while ((m = regex.exec(str)) !== null) {
+                if(m.index == regex.lastIndex) {
+                  regex.lastIndex++;
+                }
+                m.forEach((match, groupIndex) => {
+                    console.log(`Found match, group ${groupIndex}: ${match}`);
+                    if(groupIndex == 0)
+                      old_match = match;
+                    if(groupIndex == 1) {
+                      let link = document.createElement('a');
+                      link.href = '/checkout/' + match;
+                      link.textContent = '(Click here to finish)'
+
+
+                      s = str.replace(old_match, '');
+                      ptag.textContent = s;
+                      ptag.appendChild(link);
+                    }
+                });
+              }
+              return s;
+          }
+
+
+        </script>
         <h4 class="text-center">Inbox</h4>
         <div class="inbox-container">
             <ul class="list-group">
               {% for message in messages %}
-                <li class="list-group-item message"><a class="message" href="/checkout/{{item.id}}">{{message.message}}</a></li>
+                <li class="list-group-item message">
+                  <p id="msg_{{message.id}}">{{message.message}} </p>
+                  <script>
+
+                    a = replace_link('{{message.message}}', document.getElementById('msg_{{message.id}}'))
+                  </script>
+                </li>
               {% endfor %}
             </ul>
         </div>
