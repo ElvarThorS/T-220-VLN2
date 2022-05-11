@@ -39,18 +39,31 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'inbox' %}"><span class="bi bi-envelope"></span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" height="36"></a>
-                    <ul class="dropdown-menu dropdown-menu-end profile-dropdown" aria-labelledby="navbarDropdown">
-                        <li><p class="dropdown-item">{{ request.user }}</p></li>
-                        <li class="dropdown-item profile-dropdown-bio"><small>{{ personal_info.bio }}</small></li>
-                        <hr>
-                        <li><p class="dropdown-item">Average grade: ???</p></li>
-                        <hr>
-                        <li><a class="dropdown-item" href="{% url 'edit-profile' %}">Edit profile</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
-                    </ul>
-                </li>
+                <div class="action">
+                  <div class="profile" onclick="menuToggle();">
+                    <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" />
+                  </div>
+                  <div class="menu">
+                      <div class="profile" onclick="menuToggle();">
+                          <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" />
+                      </div>
+                      <div class="profile-dropdown">
+                          <h3>{{ personal_info.name  }}<br/>
+                          <span class="text-dark">Average grade: ???</span><br/>
+                          <span>{{ personal_info.bio }}</span>
+                          </h3>
+                          <hr>
+                          <a class="dropdown-item" href="{% url 'edit-profile' request.user.id %}">Edit profile</a>
+                          <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
+                      </div>
+                  </div>
+                </div>
+                <script>
+                  function menuToggle() {
+                    const toggleMenu = document.querySelector(".menu");
+                    toggleMenu.classList.toggle("active");
+                  }
+                </script>
             </ul>
             {% else %}
             <ul class="navbar-nav">
