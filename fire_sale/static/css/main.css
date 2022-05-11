@@ -77,8 +77,10 @@
 }
 
 .inbox-outer-container {
+    margin-top: 1em;
     display: inline-block;
     justify-content: center;
+    width: 100%;
 }
 
 .message {
@@ -105,13 +107,33 @@
     text-align: center;
 }
 
-.my-item-sidebar{
+.my-item-sidebar {
     width: 20%;
     display: inline-block;
     float: left;
     justify-content: center;
     text-align: center;
 }
+
+.item-main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 2em;
+}
+
+.place-offer-container {
+    display: block;
+    text-align: center;
+}
+
+.place-offer {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
 ----------------------
 
 .action {

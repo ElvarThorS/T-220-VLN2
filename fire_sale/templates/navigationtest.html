@@ -49,9 +49,10 @@
                       </div>
                       <div class="profile-dropdown">
                           <h3>{{ personal_info.name  }}<br/>
-                          <span>{{ personal_info.bio }}</span></h3>
+                          <span class="text-dark">Average grade: ???</span><br/>
+                          <span>{{ personal_info.bio }}</span>
+                          </h3>
                           <hr>
-                          <p class="dropdown-item">Average grade: ???</p>
                           <a class="dropdown-item" href="{% url 'edit-profile' request.user.id %}">Edit profile</a>
                           <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
                       </div>
