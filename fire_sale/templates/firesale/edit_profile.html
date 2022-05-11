@@ -4,18 +4,7 @@
             <h4 class="text-center">Edit Profile</h4>
                 <form class="form form-horizontal" action="{% url 'edit-profile' id %}" method="post">
                     {% csrf_token %}
-                    <div class="form-group m-2">
-                        <p class="">{{ form.name.label }}</p>
-                        {{ form.name }}
-                    </div>
-                    <div class="form-group text-left">
-                        {{ form.bio.label }}
-                        {{ form.bio }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.user_image.label }}<br>
-                        {{ form.user_image }}
-                    </div>
+                    {{ form }}
                     <input type="submit" value="Update" class="btn btn-primary pull-right" style="clear:both; margin: 10px 0"/>
                 </form>
         </div>
