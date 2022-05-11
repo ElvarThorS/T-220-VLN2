@@ -8,6 +8,7 @@ from firesale.forms.personal_form import PersonalForm, UpdatePersonalForm
 from firesale.forms.offer_form import OfferForm
 from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
 from . import models
 
@@ -202,8 +203,35 @@ def item(request, item_id):
     })
 
 @login_required
+@csrf_exempt
 def checkout(request, item_id):
     item = Item.objects.filter(id=item_id).first()
-    return render(request, 'firesale/checkout.html', {
-        'item': item,
-    })
+    if request.method == 'POST':
+        post = request.POST
+        print("POST:", str(post))
+        #print('POST ACTION:', post.action)
+        if 'action' in post and 'offer_id' in post:
+
+            action = post['action']
+            offer_id = post['offer_id']
+            print('ACTION:', action, 'OFFER ID:', offer_id)
+            offer = Offer.object.filter(id=offer_id).first()
+            offerer = User.object.filter(id=offer.user_offering).first()
+
+            if action == 'accept':
+                rejected_offers = Offer.object.exclude(id=offer_id)
+                accept_msg = Message(to=offerer, message=f'Your offer on <a href="/checkout/{item_id}/">{item.name}</a> has been accepted!')
+                for rejection in rejected_offers:
+                    reject_msg = Message(to=User.object.filter(id=rejction.user_offering).first(), message=f'Your offer on {item.name} has been rejected!')
+                    reject_msg.save()
+                accept_msg.save()
+            elif action == 'reject':
+                reject_msg = Message(to=offerer, message=f'Your offer on {item.name} has been rejected!')
+                reject_msg.save()
+        return redirect('/dashboard')
+
+    else:
+
+        return render(request, 'firesale/checkout.html', {
+            'item': item,
+        })

@@ -19,9 +19,29 @@
                 {% for offer in offers %}
                     <!-- Hér er hægt að geta lista yfir tilboð -->
                     <li class="list-group-item message">
+                        {% csrf_token %}
                         Offer: {{ offer }}<br>
-                        <button type="button" class="btn btn-outline-success">Accept</button>
-                        <button type="button" class="btn btn-outline-danger">Reject</button>
+                        <button type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer }}, true)">Accept</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer }}, false)">Reject</button>
+                        <script type="text/javascript">
+                          function send_offer_msg(offer_id, accept) {
+                            const xhr = new XMLHttpRequest();
+
+                            xhr.open('POST', '/checkout/{{item.id}}/');
+                            xhr.setRequestHeader("Accept", "application/json");
+                            xhr.setRequestHeader("Content-Type", "application/json");
+                            /*const data = {
+                              'offer_id': offer_id,
+                              'action': accept ? 'accept': 'reject'
+                            }*/
+
+                            const action = accept ? 'accept' : 'reject';
+
+
+                            const data = "action=" + action + '&offer_id=' + offer_id;
+                            xhr.send(data);
+                          }
+                        </script>
                     </li>
                 {% endfor %}
             </ul>
