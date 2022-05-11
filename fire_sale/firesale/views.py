@@ -63,11 +63,23 @@ def dashboard(request):
             item_image = ItemImage(image=image, item=item)
             item_image.save()
     else:
-        if request.method == 'GET' and 'search' in request.GET:
-            search = request.GET['search']
+        if request.method == 'GET':
+            if 'search' in request.GET:
+                search = request.GET['search']
+            if 'sortby' in request.GET:
+                sortby = request.GET['sortby']
         form = CreateItemForm()
     items = Item.objects.filter(name__icontains=search) if search else Item.objects.all()
-    related = items.select_related()
+
+    if sortby == 'price':
+        items = Item.objects.raw(f'''SELECT fi.id, offer.price FROM firesale_item fi
+    JOIN firesale_offer offer ON offer.item_id = fi.id
+        WHERE offer.price = (SELECT MAX(o.price)
+            FROM firesale_offer o WHERE o.item_id = fi.id)
+        {f"AND LOWER(fi.name) LIKE LOWER('%%{search}%%')" if search else ''}
+    ORDER BY offer.price DESC;''')
+    else:
+        items = items.order_by('name')
 
     __offers = {}
     #print("PersonalInformation:", request.user.PersonalInformation)
@@ -159,7 +171,6 @@ def item(request, item_id):
             'user_offering': request.user,
             'price': post['price'],
         })
-        print("FORM:", form)
         if form.is_valid():
             form.save()
             return redirect('/dashboard')
