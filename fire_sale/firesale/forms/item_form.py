@@ -11,11 +11,11 @@ class CreateItemForm(ModelForm):
         super(CreateItemForm, self).__init__(*args, **kwargs)
         self.fields['seller'] = forms.ModelChoiceField(queryset=User.objects,required=False, widget=forms.HiddenInput())
 
-    image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control'}))
+    image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     #seller = forms.ModelChoiceField(queryset=User.objects.filter(),required=False, widget=forms.HiddenInput())
     class Meta:
         model = Item
-        exclude = [ 'id' ]
+        exclude = ['id']
         widgets = {
             'name': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'}),
             'condition': widgets.Select(attrs={'class': 'form-control', 'value': 'Select condition'}),
