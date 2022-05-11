@@ -204,7 +204,8 @@ def item(request, item_id):
     return render(request, 'firesale/item.html', {
         'item': item,
         'images': images,
-        'offer': offers.aggregate(Max('price'))['price__max'],
+        'max_price': offers.aggregate(Max('price'))['price__max'],
+        #'offer_id': offers.aggregate(Max('price'))['id'],
         'offers': offers,
         'personal_info': personal_info,
         'form': form,

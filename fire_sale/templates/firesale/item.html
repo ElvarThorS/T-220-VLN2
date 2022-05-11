@@ -6,7 +6,7 @@
         <p class="">{{ item.description }}</p>
         <p>Seller: {{ item.seller }}</p>
         <p>Condition: {{ item.condition }}</p>
-        <p>Current hightest offer amount: {{ offer }}</p>
+        <p>Current hightest offer amount: {{ max_price }}</p>
         <div class="items">
           {% for image in images %}
               <img class="img-thumbnail item-detail-img" src="{{image}}" />
@@ -21,8 +21,8 @@
                     <li class="list-group-item message">
                         {% csrf_token %}
                         Offer: {{ offer }}<br>
-                        <button type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer }}, true)">Accept</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer }}, false)">Reject</button>
+                        <button type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer.id }}, true)">Accept</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer.id }}, false)">Reject</button>
 
                     </li>
                 {% endfor %}
