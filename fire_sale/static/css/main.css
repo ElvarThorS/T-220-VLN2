@@ -134,6 +134,15 @@
     text-align: left;
 }
 
+.edit-profile-container {
+    display: inline-block;
+    margin-left: 25%;
+    margin-right: auto;
+    width: 50%;
+    justify-content: center;
+    border: 1px solid red;
+}
+
 ----------------------
 
 .action {

@@ -91,6 +91,7 @@ def dashboard(request):
 
 
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
 
 
     return render(request, 'firesale/dashboard.html', {
@@ -100,16 +101,18 @@ def dashboard(request):
         'items': items,
         'offers': __offers,
         'personal_info': personal_info,
-
+        'user_image': user_image
     })
 
 @login_required
 def inbox(request):
     messages = Message.objects.filter(to=request.user.id)
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
     return render(request, 'firesale/inbox.html', {
         'messages': messages,
-        'personal_info': personal_info
+        'personal_info': personal_info,
+        'user_image': user_image
     })
 
 @login_required
@@ -122,6 +125,7 @@ def my_items(request):
     else:
         form = CreateItemForm()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
 
     items = Item.objects.filter(seller=request.user.id)
     related = items.select_related()
@@ -140,6 +144,7 @@ def my_items(request):
         'form': form,
         'offers': __offers,
         'items': items,
+        'user_image': user_image
     })
 
 @login_required
@@ -154,10 +159,12 @@ def edit_profile(request, id):
     else:
         form = UpdatePersonalForm(instance=instance)
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
     return render(request, 'firesale/edit_profile.html', {
         'personal_info': personal_info,
         'form': form,
-        'id': id
+        'id': id,
+        'user_image':user_image
     })
 
 
@@ -191,6 +198,7 @@ def item(request, item_id):
         })
     item = Item.objects.filter(id=item_id).first()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
     offers = Offer.objects.filter(item_id=item.id)
 
     return render(request, 'firesale/item.html', {
@@ -200,6 +208,7 @@ def item(request, item_id):
         'offers': offers,
         'personal_info': personal_info,
         'form': form,
+        'user_image': user_image
     })
 
 @login_required
@@ -231,7 +240,10 @@ def checkout(request, item_id):
         return redirect('/dashboard')
 
     else:
-
+        personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+        user_image = Image.objects.filter(id=personal_info.user_image_id).first()
         return render(request, 'firesale/checkout.html', {
             'item': item,
+            'personal_info': personal_info,
+            'user_image': user_image
         })
