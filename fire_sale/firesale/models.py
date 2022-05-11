@@ -7,9 +7,13 @@ from django.contrib.auth import models as auth_models
 class Image(models.Model):
     url = models.CharField(max_length=16384)
 
+    def __str__(self):
+        return self.url
+
 
 class Condition(models.Model):
     condition = models.CharField(max_length=255)
+
     def __str__(self):
         return self.condition
 

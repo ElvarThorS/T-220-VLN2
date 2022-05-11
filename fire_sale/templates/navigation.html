@@ -41,14 +41,14 @@
                 </li>
                 <div class="action">
                   <div class="profile" onclick="menuToggle();">
-                    <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" />
+                    <img src="{{ user_image }}" />
                   </div>
                   <div class="menu">
                       <div class="profile" onclick="menuToggle();">
-                          <img src="https://www.seekpng.com/png/detail/514-5147412_default-avatar-icon.png" />
+                          <img src="{{ user_image }}" />
                       </div>
                       <div class="profile-dropdown">
-                          <h3>{{ personal_info.name  }}<br/>
+                          <h3>{{ personal_info.name }}<br/>
                           <span class="text-dark">Average grade: ???</span><br/>
                           <span>{{ personal_info.bio }}</span>
                           </h3>
