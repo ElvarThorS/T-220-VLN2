@@ -241,8 +241,12 @@ def checkout(request, item_id):
             elif action == 'reject':
                 reject_msg = Message(to=offerer, message=f'Your offer on {item.name} has been rejected!')
                 reject_msg.save()
-        return redirect('/dashboard')
 
+            return redirect('/dashboard')
+        elif 'full_name' in post and 'street_name' in post and 'house_number' in post and 'country' in post and 'postal_code' in post:
+            # Hér er allt fyrir contact information POST
+            contact = ContactForm(data=post)
+            
     else:
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()

@@ -30,6 +30,7 @@ class Item(models.Model):
     seller = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
     description = models.CharField(max_length=8192)
     condition = models.ForeignKey(Condition, on_delete=models.CASCADE)
+    is_open = models.BooleanField(default=True)
 
 
 class ItemImage(models.Model):
