@@ -2,7 +2,7 @@
 {% block content %}
     <h4>Checkout {{ item.id }}</h4>
     <p><u>Contact information</u> > Payment > Review</p>
-    <form>
+    <!--<form>
       <div class="form-group">
         <label>Full name</label>
         <input type="text" class="form-control" placeholder="Enter your full name">
@@ -28,5 +28,9 @@
         <input type="text" class="form-control" placeholder="Enter your postal code">
       </div>
       <button type="submit" class="btn btn-primary">Continue to payment</button>
+    </form>-->
+    <form>
+      {% csrf_token %}
+      {{ form }}
     </form>
 {% endblock %}

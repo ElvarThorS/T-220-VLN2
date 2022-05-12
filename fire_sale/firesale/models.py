@@ -49,3 +49,9 @@ class Offer(models.Model):
 class Message(models.Model):
     to = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
     message = models.CharField(max_length=8192)
+
+class Payment(models.Model):
+    card_holder_name = models.CharField(max_length=255)
+    card_number = models.CharField(max_length=16)
+    expiration_date = models.DateField()
+    cvc = models.IntegerField()

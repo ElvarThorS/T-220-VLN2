@@ -6,6 +6,7 @@ from django.db.models import Max
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm, UpdatePersonalForm
 from firesale.forms.offer_form import OfferForm
+from firesale.forms.contact_form import ContactForm
 from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -241,8 +242,10 @@ def checkout(request, item_id):
     else:
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()
+        contact_form = ContactForm()
         return render(request, 'firesale/checkout.html', {
             'item': item,
             'personal_info': personal_info,
-            'user_image': user_image
+            'user_image': user_image,
+            'form': contact_form,
         })
