@@ -31,6 +31,10 @@
     </form>-->
     <form>
       {% csrf_token %}
-      {{ form }}
+      {{ contact_form }}
+    </form>
+    <form>
+      {% csrf_token %}
+      {{ payment_form }}
     </form>
 {% endblock %}
