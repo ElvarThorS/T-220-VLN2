@@ -269,6 +269,17 @@ def checkout(request, item_id):
 @login_required
 @csrf_exempt
 def payment_information(request, item_id):
+    if request.method == 'POST':
+        post = request.POST
+        if 'card_holder_name' in post and 'card_number' in post and 'expiration_date' in post and 'cvc' in post:
+            # Hér er allt fyrir payment information POST
+            payment = PaymentForm(data=post)
+            print("PAYMENT:", payment)
+
+            ## Kóði hér...
+
+            return redirect('/review/' + item_id + '/')
+
     item = Item.objects.filter(id=item_id).first()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     user_image = Image.objects.filter(id=personal_info.user_image_id).first()
