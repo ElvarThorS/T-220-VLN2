@@ -18,6 +18,8 @@ from . import models
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('/dashboard/')
     return render(request, 'firesale/index.html')
 
 
@@ -258,12 +260,22 @@ def checkout(request, item_id):
 @login_required
 def review(request, item_id):
     item = Item.objects.filter(id=item_id).first()
-    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
-    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
-    order_form = OrderForm()
-    return render(request, 'firesale/review.html', {
-        'item': item,
-        'personal_info': personal_info,
-        'user_image': user_image,
-        'form': order_form,
-    })
+    if request.method == 'POST':
+        order_form = OrderForm(data={
+            'item': item.id,
+            'buyer': request.user.id,
+            'rating': request.POST['rating']
+        })
+        order_form.save()
+        return redirect('/dashboard/')
+    else:
+
+        personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+        user_image = Image.objects.filter(id=personal_info.user_image_id).first()
+        order_form = OrderForm()
+        return render(request, 'firesale/review.html', {
+            'item': item,
+            'personal_info': personal_info,
+            'user_image': user_image,
+            'form': order_form,
+        })

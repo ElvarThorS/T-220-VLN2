@@ -7,7 +7,7 @@ class OrderForm(ModelForm):
         model = Order
         exclude = [ 'id' ]
         widgets = {
-            'item': None,
-            'buyer': None,
-            'rate': None,
+            'item': widgets.TextInput(attrs={'class': 'form-control'}),
+            'buyer': widgets.TextInput(attrs={'class': 'form-control'}),
+            'rating': widgets.TextInput(attrs={'class': 'form-control'}),
         }
