@@ -1,10 +1,10 @@
 from django.forms import ModelForm, widgets
 from django import forms
-from firesale.models import Review
+from firesale.models import Order
 
-class ReviewForm(ModelForm):
+class OrderForm(ModelForm):
     class Meta:
-        model = Review
+        model = Order
         exclude = [ 'id' ]
         widgets = {
             'item': None,

@@ -56,7 +56,8 @@ class Payment(models.Model):
     expiration_date = models.DateField()
     cvc = models.IntegerField()
 
-class Review(models.Model):
+class Order(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     buyer = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
-    rate = models.FloatField()
+    rating = models.FloatField()
+    price = models.IntegerField()
