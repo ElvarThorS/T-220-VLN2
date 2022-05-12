@@ -246,7 +246,12 @@ def checkout(request, item_id):
         elif 'full_name' in post and 'street_name' in post and 'house_number' in post and 'country' in post and 'postal_code' in post:
             # Hér er allt fyrir contact information POST
             contact = ContactForm(data=post)
-            
+            print("CONTACT:", contact)
+
+            ## Kóði hér...
+
+            return redirect('/payment-information/' + item_id + '/')
+
     else:
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()
