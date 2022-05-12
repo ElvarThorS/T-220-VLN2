@@ -142,6 +142,16 @@
     justify-content: center;
 }
 
+#payment-info{
+    display: none;
+}
+
+.return-msg {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
 ----------------------
 
 .action {

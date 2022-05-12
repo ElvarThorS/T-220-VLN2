@@ -1,47 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-
-    <!--<form>
-      <div class="form-group">
-        <label>Full name</label>
-        <input type="text" class="form-control" placeholder="Enter your full name">
-      </div>
-      <div class="form-group">
-        <label>Street name</label>
-        <input type="text" class="form-control" placeholder="Enter your street name">
-      </div>
-      <div class="form-group">
-        <label>House number</label>
-        <input type="text" class="form-control" placeholder="Enter your house number">
-      </div>
-      <div class="form-group">
-        <label>City</label>
-        <input type="text" class="form-control" placeholder="E.g. Reykjavik, Los Angeles etc.">
-      </div>
-      <div class="form-group">
-        <label>Country</label>
-        <input type="text" class="form-control" placeholder="E.g. Iceland, Britain etc.">
-      </div>
-      <div class="form-group">
-        <label>Postal code</label>
-        <input type="text" class="form-control" placeholder="Enter your postal code">
-      </div>
-      <button type="submit" class="btn btn-primary">Continue to payment</button>
-    </form>-->
-    <div class="container">
+    <script type="text/javascript">
+              function switchDisplay() {
+                  var contact = document.getElementById("contact-info");
+                  var payment = document.getElementById("payment-info");
+                  if (contact.style.display === "none") {
+                    contact.style.display = "block";
+                    payment.style.display = "none";
+                  } else {
+                    contact.style.display = "none";
+                    payment.style.display = "block";
+                  }
+              }
+    </script>
+    <div class="container text-center" id="contact-info">
         <h4 class="text-center">Checkout on item: {{ item.name }}</h4>
         <p class="text-center"><u>Contact information</u> > Payment > Review</p>
         <div class="container-fluid bg-light text-dark border border-secondary rounded p-4 w-25">
             <form>
                 {% csrf_token %}
                 {{ contact_form }}
-                <button type="submit" class="btn btn-primary mt-2">Continue to payment</button>
+                <button onclick="switchDisplay()" class="btn btn-primary mt-2">Continue to payment</button>
             </form>
         </div>
     </div>
-    <div class="container">
+    <div class="container text-center" id="payment-info">
         <h4 class="text-center">Checkout on item:  {{ item.name }}</h4>
-        <p class="text-center">Contact information > <u>Payment</u> > Review</p>
+        <p class="text-center"><span onclick="switchDisplay()" style="cursor: pointer">Contact information</span> > <u>Payment</u> > Review</p>
         <div class="container-fluid bg-light text-dark border border-secondary rounded p-4 w-25">
             <form>
                 {% csrf_token %}
@@ -49,5 +34,6 @@
                 <button type="submit" class="btn btn-primary mt-2">Continue to review</button>
             </form>
         </div>
+        <a onclick="switchDisplay()" class="text-center return-msg">return to contact information</a>
     </div>
 {% endblock %}
