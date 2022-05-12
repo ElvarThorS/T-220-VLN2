@@ -55,3 +55,8 @@ class Payment(models.Model):
     card_number = models.CharField(max_length=16)
     expiration_date = models.DateField()
     cvc = models.IntegerField()
+
+class Review(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
+    rate = models.FloatField()

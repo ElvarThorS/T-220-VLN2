@@ -31,5 +31,6 @@ urlpatterns = [
     path('my-items/', views.my_items, name="my-items"),
     path('edit-profile/<int:id>', views.edit_profile, name="edit-profile"),
     path('item/<item_id>/', views.item, name='item'),
-    path('checkout/<item_id>/', views.checkout, name='checkout')
+    path('checkout/<item_id>/', views.checkout, name='checkout'),
+    path('review/<item_id>/', views.review, name='review')
 ]

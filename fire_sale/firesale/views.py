@@ -252,3 +252,9 @@ def checkout(request, item_id):
             'contact_form': contact_form,
             'payment_form': payment_form,
         })
+
+@login_required
+def review(request, item_id):
+    return render(request, 'firesale/review.html', {
+        
+    })
