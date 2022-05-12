@@ -258,6 +258,20 @@ def checkout(request, item_id):
 
 
 @login_required
+@csrf_exempt
+def payment_information(request, item_id):
+    item = Item.objects.filter(id=item_id).first()
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
+    payment_form = PaymentForm()
+    return render(request, 'firesale/payment_information.html', {
+        'item': item,
+        'personal_info': personal_info,
+        'user_image': user_image,
+        'payment_form': payment_form,
+    })
+
+@login_required
 def review(request, item_id):
     item = Item.objects.filter(id=item_id).first()
     if request.method == 'POST':

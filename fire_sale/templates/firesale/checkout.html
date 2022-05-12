@@ -1,18 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-    <script type="text/javascript">
-              function switchDisplay() {
-                  var contact = document.getElementById("contact-info");
-                  var payment = document.getElementById("payment-info");
-                  if (contact.style.display === "none") {
-                    contact.style.display = "block";
-                    payment.style.display = "none";
-                  } else {
-                    contact.style.display = "none";
-                    payment.style.display = "block";
-                  }
-              }
-    </script>
     <div class="container text-center" id="contact-info">
         <h4 class="text-center">Checkout on item: {{ item.name }}</h4>
         <p class="text-center"><u>Contact information</u> > Payment > Review</p>
@@ -20,20 +7,8 @@
             <form>
                 {% csrf_token %}
                 {{ contact_form }}
-                <button type="submit" onclick="switchDisplay()" class="btn btn-primary mt-2">Continue to payment</button>
+                <button type="submit" class="btn btn-primary mt-2">Continue to payment</button>
             </form>
         </div>
-    </div>
-    <div class="container text-center" id="payment-info">
-        <h4 class="text-center">Checkout on item:  {{ item.name }}</h4>
-        <p class="text-center"><span onclick="switchDisplay()" style="cursor: pointer">Contact information</span> > <u>Payment</u> > Review</p>
-        <div class="container-fluid bg-light text-dark border border-secondary rounded p-4 w-25">
-            <form>
-                {% csrf_token %}
-                {{ payment_form }}
-                <input type="submit" class="btn btn-primary mt-2" value="Continue to review">
-            </form>
-        </div>
-        <a onclick="switchDisplay()" class="text-center return-msg">return to contact information</a>
     </div>
 {% endblock %}

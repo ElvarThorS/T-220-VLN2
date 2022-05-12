@@ -21,15 +21,18 @@
                     <li class="list-group-item message">
                         {% csrf_token %}
                         Offer: {{ offer }}<br>
-                        <button id="bool-btn" type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer.id }}, true)">Accept</button>
-                        <button id="bool-btn" type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer.id }}, false)">Reject</button>
+                        <button id="accept-btn" type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer.id }}, true)">Accept</button>
+                        <button id="reject-btn" type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer.id }}, false)">Reject</button>
 
                     </li>
                 {% endfor %}
             </ul>
             <script type="text/javascript">
 
-                document.getElementById("bool-btn").onclick = function () {
+                document.getElementById("accept-btn").onclick = function () {
+                    location.href = "{% url 'dashboard' %}";
+                };
+                document.getElementById("reject-btn").onclick = function () {
                     location.href = "{% url 'dashboard' %}";
                 };
 
