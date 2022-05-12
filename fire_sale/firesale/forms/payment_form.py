@@ -7,8 +7,8 @@ class PaymentForm(ModelForm):
         model = Payment
         exclude = ['id']
         widgets = {
-            'card_holder_name': widgets.TextInput(attrs={'class': 'form-control'}),
-            'card_number': widgets.TextInput(attrs={'class': 'form-control'}),
-            'expiration_date': DateInput(attrs={'class':'form-control'}),
-            'cvc': widgets.TextInput(attrs={'class': 'form-control'}),
+            'card_holder_name': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter cardholder name'}),
+            'card_number': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxx-xxxx-xxxx-xxxx'}),
+            'expiration_date': DateInput(attrs={'class':'form-control', 'placeholder': 'Enter expiration date'}),
+            'cvc': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter CVC'}),
         }
