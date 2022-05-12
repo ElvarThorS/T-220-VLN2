@@ -253,8 +253,14 @@ def checkout(request, item_id):
             'payment_form': payment_form,
         })
 
+
 @login_required
 def review(request, item_id):
+    item = Item.objects.filter(id=item_id).first()
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
     return render(request, 'firesale/review.html', {
-        
+        'item': item,
+        'personal_info': personal_info,
+        'user_image': user_image
     })
