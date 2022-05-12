@@ -244,7 +244,7 @@ def checkout(request, item_id):
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()
         contact_form = ContactForm()
-        paymeny_form = PaymenyForm()
+        payment_form = PaymentForm()
         return render(request, 'firesale/checkout.html', {
             'item': item,
             'personal_info': personal_info,
