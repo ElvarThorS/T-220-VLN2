@@ -17,7 +17,7 @@ class PersonalForm(ModelForm):
 
 
 class UpdatePersonalForm(ModelForm):
-    image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    #image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = PersonalInformation
         exclude = ['id', 'auth_user_id']
