@@ -31,7 +31,7 @@
             <form>
                 {% csrf_token %}
                 {{ payment_form }}
-                <button type="submit" class="btn btn-primary mt-2">Continue to review</button>
+                <input type="submit" class="btn btn-primary mt-2" value="Continue to review">
             </form>
         </div>
         <a onclick="switchDisplay()" class="text-center return-msg">return to contact information</a>
