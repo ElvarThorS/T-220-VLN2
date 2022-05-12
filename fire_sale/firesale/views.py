@@ -8,6 +8,7 @@ from firesale.forms.personal_form import PersonalForm, UpdatePersonalForm
 from firesale.forms.offer_form import OfferForm
 from firesale.forms.contact_form import ContactForm
 from firesale.forms.payment_form import PaymentForm
+from firesale.forms.review_form import ReviewForm
 from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -259,8 +260,10 @@ def review(request, item_id):
     item = Item.objects.filter(id=item_id).first()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     user_image = Image.objects.filter(id=personal_info.user_image_id).first()
+    review_form = ReviewForm()
     return render(request, 'firesale/review.html', {
         'item': item,
         'personal_info': personal_info,
-        'user_image': user_image
+        'user_image': user_image,
+        'form': review_form,
     })
