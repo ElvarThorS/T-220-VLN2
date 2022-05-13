@@ -9,7 +9,7 @@ from firesale.forms.offer_form import OfferForm
 from firesale.forms.contact_form import ContactForm
 from firesale.forms.payment_form import PaymentForm
 from firesale.forms.order_form import OrderForm
-from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation
+from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation, Payment
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
@@ -249,6 +249,7 @@ def checkout(request, item_id):
             if contact.is_valid():
                 data = contact.cleaned_data
                 personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+                personal_info.name = data['full_name']
                 personal_info.street_name = data['street_name']
                 personal_info.house_number = data['house_number']
                 personal_info.country = data['country']
@@ -263,7 +264,13 @@ def checkout(request, item_id):
     else:
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()
-        contact_form = ContactForm()
+        contact_form = ContactForm(data={
+            'full_name': personal_info.name,
+            'street_name': personal_info.street_name,
+            'house_number': personal_info.house_number,
+            'country': personal_info.country or 'ISL',
+            'postal_code': personal_info.postal_code,
+        })
         payment_form = PaymentForm()
         return render(request, 'firesale/checkout.html', {
             'item': item,
@@ -281,7 +288,8 @@ def payment_information(request, item_id):
         post = request.POST
         if 'card_holder_name' in post and 'card_number' in post and 'expiration_date' in post and 'cvc' in post:
             # Hér er allt fyrir payment information POST
-            payment = PaymentForm(data=post)
+            personal = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+            payment = PaymentForm(data=post, instance=Payment.objects.filter(id=personal.payment_info_id).first())
             print("PAYMENT:", payment)
             if payment.is_valid():
                 saved = payment.save()
@@ -300,7 +308,8 @@ def payment_information(request, item_id):
     item = Item.objects.filter(id=item_id).first()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     user_image = Image.objects.filter(id=personal_info.user_image_id).first()
-    payment_form = PaymentForm()
+    payment_info = Payment.objects.filter(id=personal_info.payment_info_id).first()
+    payment_form = PaymentForm(instance=payment_info)
     return render(request, 'firesale/payment_information.html', {
         'item': item,
         'personal_info': personal_info,
