@@ -246,11 +246,18 @@ def checkout(request, item_id):
         elif 'full_name' in post and 'street_name' in post and 'house_number' in post and 'country' in post and 'postal_code' in post:
             # Hér er allt fyrir contact information POST
             contact = ContactForm(data=post)
-            print("CONTACT:", contact)
+            if contact.is_valid():
+                data = contact.cleaned_data
+                personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+                personal_info.street_name = data['street_name']
+                personal_info.house_number = data['house_number']
+                personal_info.country = data['country']
+                personal_info.postal_code = data['postal_code']
+                personal_info.save()
+            else:
+                print("Invalid data!")
 
-            ## Kóði hér...
-            test = contact.save(commit=False)
-            print("CONTACT TEST:", test)
+
             return redirect('/payment-information/' + item_id + '/')
 
     else:
@@ -304,7 +311,6 @@ def review(request, item_id):
         order_form.save()
         return redirect('/dashboard/')
     else:
-
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()
         order_form = OrderForm()
