@@ -9,12 +9,12 @@ class OrderForm(ModelForm):
         self.fields['item'].widget = forms.HiddenInput()
         self.fields['buyer'].widget = forms.HiddenInput()
         self.fields['price'].widget = forms.HiddenInput()
-        self.fields['rating'].label = "Rate the seller (1-5)"
+        self.fields['rating'].label = "Rate the seller:"
     class Meta:
         model = Order
         exclude = ['id']
         widgets = {
             'item': widgets.TextInput(attrs={'class': 'form-control'}),
             'buyer': widgets.TextInput(attrs={'class': 'form-control'}),
-            'rating': widgets.NumberInput(attrs={'class': 'form-control'}),
+            'rating': widgets.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Range: 1-5'}),
         }

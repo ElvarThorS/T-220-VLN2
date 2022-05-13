@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+        <style>
+            .errorlist {
+            display:none;
+            }
+        </style>
         <div class="edit-profile-container">
             <h4 class="text-center">Edit Profile</h4>
                 <form class="form form-horizontal" action="{% url 'edit-profile' id %}" method="post">

@@ -22,6 +22,7 @@ class UpdatePersonalForm(ModelForm):
         self.fields['country'].widget = forms.HiddenInput()
         self.fields['street_name'].widget = forms.HiddenInput()
         self.fields['house_number'].widget = forms.HiddenInput()
+        self.fields['city'].widget = forms.HiddenInput()
         self.fields['postal_code'].widget = forms.HiddenInput()
         self.fields['payment_info'].widget = forms.HiddenInput()
         self.fields['user_image'].widget = forms.HiddenInput()
