@@ -330,11 +330,13 @@ def review(request, item_id):
         return redirect('/dashboard/')
     else:
         personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+        payment_info = Payment.objects.filter(id=personal_info.payment_info_id).first()
         user_image = Image.objects.filter(id=personal_info.user_image_id).first()
         order_form = OrderForm()
         return render(request, 'firesale/review.html', {
             'item': item,
             'personal_info': personal_info,
+            'payment_info': payment_info,
             'user_image': user_image,
             'form': order_form,
         })

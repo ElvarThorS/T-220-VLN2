@@ -152,6 +152,18 @@
     cursor: pointer;
 }
 
+.info-container {
+    display: flex;
+}
+
+.contact-info {
+
+}
+
+.payment-info {
+
+}
+
 ----------------------
 
 .action {
