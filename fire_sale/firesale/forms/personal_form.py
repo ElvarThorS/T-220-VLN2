@@ -17,6 +17,14 @@ class PersonalForm(ModelForm):
 
 
 class UpdatePersonalForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdatePersonalForm, self).__init__(*args, **kwargs)
+        self.fields['auth_user'].widget = forms.HiddenInput()
+        self.fields['country'].widget = forms.HiddenInput()
+        self.fields['street_name'].widget = forms.HiddenInput()
+        self.fields['house_number'].widget = forms.HiddenInput()
+        self.fields['postal_code'].widget = forms.HiddenInput()
+
     #image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = PersonalInformation
