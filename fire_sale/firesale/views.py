@@ -160,7 +160,7 @@ def edit_profile(request, id):
         if form.is_valid():
             form.save()
             return redirect('dashboard')
-        print(1)
+        #print(1)
     else:
         form = UpdatePersonalForm(instance=instance)
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
@@ -224,7 +224,7 @@ def checkout(request, item_id):
     if request.method == 'POST':
         post = request.POST
         print("POST:", str(post))
-        #print('POST ACTION:', post.action)
+
         if 'action' in post and 'offer_id' in post:
             action = post['action']
             offer_id = post['offer_id']
@@ -249,7 +249,8 @@ def checkout(request, item_id):
             print("CONTACT:", contact)
 
             ## Kóði hér...
-
+            test = contact.save(commit=False)
+            print("CONTACT TEST:", test)
             return redirect('/payment-information/' + item_id + '/')
 
     else:
