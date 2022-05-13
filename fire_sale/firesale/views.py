@@ -2,18 +2,35 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.db.models import Max
+from django.db.models import Max, Model, IntegerField, FloatField
 from firesale.forms.item_form import CreateItemForm
 from firesale.forms.personal_form import PersonalForm, UpdatePersonalForm
 from firesale.forms.offer_form import OfferForm
 from firesale.forms.contact_form import ContactForm
 from firesale.forms.payment_form import PaymentForm
 from firesale.forms.order_form import OrderForm
-from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation, Payment
+from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation, Payment, Order
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from . import models
 
+'''
+    !!!!!!!!!!!Þetta á EKKI að registera sem view!!!!!!!!!!!
+'''
+def get_user_average(request):
+    class Average(Model):
+        id = IntegerField(),
+        average = FloatField()
+
+    average_rating = Average.objects.raw(f'''SELECT u.id AS id, AVG(o.rating) AS average FROM firesale_order o
+    JOIN firesale_item i ON i.id = o.item_id
+    JOIN auth_user u ON u.id = i.seller_id
+       WHERE i.seller_id = {request.user.id}
+        GROUP BY u.id;''')
+    average = 'No reviews done.'
+    if len(average_rating) != 0:
+        average = average_rating[0].average
+    return average
 
 # Create your views here.
 def index(request):
@@ -98,6 +115,7 @@ def dashboard(request):
     user_image = Image.objects.filter(id=personal_info.user_image_id).first()
 
 
+
     return render(request, 'firesale/dashboard.html', {
         'title': title,
         'search': search or '',
@@ -105,7 +123,8 @@ def dashboard(request):
         'items': items,
         'offers': __offers,
         'personal_info': personal_info,
-        'user_image': user_image
+        'user_image': user_image,
+        'average': get_user_average(request)
     })
 
 @login_required
@@ -148,7 +167,8 @@ def my_items(request):
         'form': form,
         'offers': __offers,
         'items': items,
-        'user_image': user_image
+        'user_image': user_image,
+        'average': get_user_average(request)
     })
 
 @login_required
@@ -176,7 +196,8 @@ def edit_profile(request, id):
         'personal_info': personal_info,
         'form': form,
         'id': id,
-        'user_image': user_image
+        'user_image': user_image,
+        'average': get_user_average(request)
     })
 
 
@@ -221,7 +242,8 @@ def item(request, item_id):
         'offers': offers,
         'personal_info': personal_info,
         'form': form,
-        'user_image': user_image
+        'user_image': user_image,
+        'average': get_user_average(request)
     })
 
 @login_required
@@ -289,6 +311,7 @@ def checkout(request, item_id):
             'user_image': user_image,
             'contact_form': contact_form,
             'payment_form': payment_form,
+            'average': get_user_average(request),
         })
 
 
@@ -326,6 +349,7 @@ def payment_information(request, item_id):
         'personal_info': personal_info,
         'user_image': user_image,
         'payment_form': payment_form,
+        'average': get_user_average(request)
     })
 
 @login_required
@@ -353,6 +377,7 @@ def review(request, item_id):
             'payment_info': payment_info,
             'user_image': user_image,
             'form': order_form,
+            'average': get_user_average(request)
         })
     else:
         order_form = OrderForm()
@@ -362,4 +387,5 @@ def review(request, item_id):
             'payment_info': payment_info,
             'user_image': user_image,
             'form': order_form,
+            'average': get_user_average(request)
         })
