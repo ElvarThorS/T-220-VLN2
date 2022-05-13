@@ -12,7 +12,6 @@ from firesale.forms.order_form import OrderForm
 from firesale.models import Item, ItemImage, Image, Message, Offer, PersonalInformation, Payment
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-
 from . import models
 
 
@@ -319,19 +318,31 @@ def payment_information(request, item_id):
 
 @login_required
 def review(request, item_id):
+    personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    payment_info = Payment.objects.filter(id=personal_info.payment_info_id).first()
+    user_image = Image.objects.filter(id=personal_info.user_image_id).first()
     item = Item.objects.filter(id=item_id).first()
+    offers = Offer.objects.filter(item_id=item.id)
+    offer = offers.filter(is_accepted=True).first()
     if request.method == 'POST':
         order_form = OrderForm(data={
             'item': item.id,
             'buyer': request.user.id,
-            'rating': request.POST['rating']
+            'rating': request.POST['rating'],
+            'price': offer.price
         })
-        order_form.save()
-        return redirect('/dashboard/')
+        if order_form.is_valid():
+            order_form.save()
+            return redirect('/dashboard/')
+        else:
+            return render(request, 'firesale/review.html', {
+            'item': item,
+            'personal_info': personal_info,
+            'payment_info': payment_info,
+            'user_image': user_image,
+            'form': order_form,
+        })
     else:
-        personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
-        payment_info = Payment.objects.filter(id=personal_info.payment_info_id).first()
-        user_image = Image.objects.filter(id=personal_info.user_image_id).first()
         order_form = OrderForm()
         return render(request, 'firesale/review.html', {
             'item': item,
