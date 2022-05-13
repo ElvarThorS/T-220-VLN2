@@ -152,16 +152,60 @@
     cursor: pointer;
 }
 
+.review-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.review-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: auto;
+    height: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    text-decoration: none;
+    border-radius: 40px;
+}
+
+.review-item-img {
+    height: auto;
+    width: 100%;
+    max-width: 20em;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 40px;
+}
+
 .info-container {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .contact-info {
-
+    margin: 1em;
+    padding: 2em;
+    height: max-content;
 }
 
 .payment-info {
+    margin: 1em;
+    padding: 2em;
+    height: auto;
+    height: max-content;
 
+}
+
+.review-form-container {
+    margin: 1em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 ----------------------

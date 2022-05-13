@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import models as auth_models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -66,5 +67,11 @@ class Message(models.Model):
 class Order(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     buyer = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
-    rating = models.FloatField()
+    rating = models.FloatField(
+        default=None,
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1)
+        ]
+    )
     price = models.IntegerField()
