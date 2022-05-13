@@ -276,7 +276,7 @@ def checkout(request, item_id):
                 reject_msg.save()
 
             return redirect('/dashboard')
-        elif 'full_name' in post and 'street_name' in post and 'house_number' in post and 'country' in post and 'postal_code' in post:
+        elif 'full_name' in post and 'street_name' in post and 'house_number' in post and 'country' in post and 'postal_code' in post and 'city' in post:
             # Hér er allt fyrir contact information POST
             contact = ContactForm(data=post)
             if contact.is_valid():
@@ -287,6 +287,7 @@ def checkout(request, item_id):
                 personal_info.house_number = data['house_number']
                 personal_info.country = data['country']
                 personal_info.postal_code = data['postal_code']
+                personal_info.city = data['city']
                 personal_info.save()
             else:
                 print("Invalid data!")
@@ -303,6 +304,7 @@ def checkout(request, item_id):
             'house_number': personal_info.house_number,
             'country': personal_info.country or 'ISL',
             'postal_code': personal_info.postal_code,
+            'city': personal_info.city
         })
         payment_form = PaymentForm()
         return render(request, 'firesale/checkout.html', {
