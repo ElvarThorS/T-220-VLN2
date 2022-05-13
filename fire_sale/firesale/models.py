@@ -17,6 +17,11 @@ class Condition(models.Model):
     def __str__(self):
         return self.condition
 
+class Payment(models.Model):
+    card_holder_name = models.CharField(max_length=255)
+    card_number = models.CharField(max_length=16)
+    expiration_date = models.DateField()
+    cvc = models.IntegerField()
 
 class PersonalInformation(models.Model):
     auth_user = models.ForeignKey(auth_models.User, on_delete=models.CASCADE, default=None)
@@ -27,6 +32,7 @@ class PersonalInformation(models.Model):
     house_number = models.IntegerField(blank=True, default=None)
     country = models.CharField(max_length=255, blank=True, default='ISL')
     postal_code = models.IntegerField(blank=True, default=None)
+    payment_info = models.ForeignKey(Payment, on_delete=models.CASCADE)
 
 
 class Item(models.Model):
@@ -55,11 +61,7 @@ class Message(models.Model):
     to = models.ForeignKey(auth_models.User, on_delete=models.CASCADE)
     message = models.CharField(max_length=8192)
 
-class Payment(models.Model):
-    card_holder_name = models.CharField(max_length=255)
-    card_number = models.CharField(max_length=16)
-    expiration_date = models.DateField()
-    cvc = models.IntegerField()
+
 
 class Order(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)

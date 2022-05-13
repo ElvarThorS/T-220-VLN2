@@ -2,7 +2,9 @@ from django.forms import ModelForm, DateInput, widgets
 from firesale.models import Payment
 
 class PaymentForm(ModelForm):
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
     class Meta:
         model = Payment
         exclude = ['id']

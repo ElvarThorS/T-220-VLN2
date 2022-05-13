@@ -283,7 +283,8 @@ def payment_information(request, item_id):
             # Hér er allt fyrir payment information POST
             payment = PaymentForm(data=post)
             print("PAYMENT:", payment)
-
+            if payment.is_valid():
+                payment.save()
             ## Kóði hér...
 
             return redirect('/review/' + item_id + '/')
