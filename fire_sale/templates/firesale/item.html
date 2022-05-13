@@ -15,7 +15,7 @@
         </div>
         <div class="my-item-sidebar">
             <h4 class="">Offers</h4>
-            <ul class="list-group">
+            <ul id="offers" class="list-group">
                 {% for offer in offers %}
                     <!-- Hér er hægt að geta lista yfir tilboð -->
                     <li class="list-group-item message m-1 rounded">
@@ -29,7 +29,7 @@
             </ul>
             <script type="text/javascript">
                 function send_offer_msg(offer_id, accept) {
-                    document.getElementById('bool-btn').style.display = "none";
+                    document.getElementById('offers').style.display = "none";
                     const xhr = new XMLHttpRequest();
 
                     xhr.open('POST', '/checkout/{{item.id}}/');
