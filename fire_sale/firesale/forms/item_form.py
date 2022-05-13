@@ -10,6 +10,7 @@ class CreateItemForm(ModelForm):
         user = kwargs.pop('user', '')
         super(CreateItemForm, self).__init__(*args, **kwargs)
         self.fields['seller'] = forms.ModelChoiceField(queryset=User.objects,required=False, widget=forms.HiddenInput())
+        self.fields['is_open'].widget = forms.HiddenInput()
 
     image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     #seller = forms.ModelChoiceField(queryset=User.objects.filter(),required=False, widget=forms.HiddenInput())
