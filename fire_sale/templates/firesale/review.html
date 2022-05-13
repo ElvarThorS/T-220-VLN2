@@ -1,36 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container text-center">
-        <h3>Review</h3>
-        <div class="well item bg-white">
-            <img class="item-img" src="{{ item.itemimage_set.first.image.url }}">
+    <h4 class="text-center">Review</h4>
+    <p class="text-center"><a href="/checkout/{{ item.id }}" class="text-center return-msg">Contact information</a> > <a  href="/payment-information/{{ item.id }}" class="text-center return-msg">Payment</a> > <u>Review</u></p>
+    <div class="d-flex justify-content-center m-auto">
+        <div class="review-item bg-white">
+            <img class="review-item-img" src="{{ item.itemimage_set.first.image.url }}">
             <h4 class="item-name border-bottom">{{ item.name }}</h4>
             <br>
             <p class="item-description">{{ item.description }}</p>
             <p class="item-description">Condition: {{ item.condition }}</p>
             <p class="item-description">Current Price: {{ price }}</p>
         </div>
-        <div class="info-container">
-            <div class="contact-info">
-                <h3>{{ personal_info.name }}</h3>
-                <h3>{{ personal_info.street_name }} {{ personal_info.house_number }}</h3>
-                <h3>{{ personal_info.city }}</h3>
-                <h3>{{ personal_info.country }}</h3>
-                <h3>{{ personal_info.postal_code }}</h3>
+        <div class="container review-container w-auto">
+            <div class="info-container">
+                <div class="card contact-info">
+                    <h4>Contact info:</h4>
+                    <p><b>Name: </b>{{ personal_info.name }}</p>
+                    <p><b>Street name: </b>{{ personal_info.street_name }} {{ personal_info.house_number }}</p>
+                    <p><b>City: </b>{{ personal_info.city }}</p>
+                    <p><b>Country: </b>{{ personal_info.country }}</p>
+                    <p><b>Postal code: </b>{{ personal_info.postal_code }}</p>
+                </div>
+               <div class="card payment-info">
+                    <h4 class="text-center">Payment Info:</h4>
+                    <p><b>Card holder name:</b> {{ payment_info.card_holder_name }}</p>
+                    <p><b>Card number:</b> {{ payment_info.card_number }}</p>
+                    <p><b>Expiration date:</b> {{ payment_info.expiration_date }}</p>
+                    <p><b>CVC:</b> {{ payment_info.cvc }}</p>
+               </div>
             </div>
-           <div class="payment-info">
-                <h3>{{ payment_info.card_holder_name }}</h3>
-                <h3>{{ payment_info.card_number }}</h3>
-                <h3>{{ payment_info.expiration_date }}</h3>
-                <h3>{{ payment_info.cvc }}</h3>
-           </div>
-        </div>
+            <div class="review-form-container">
+                <form method="post">
+                   {% csrf_token %}
+                   {{ form }}
+                   <input type="submit" value="Pay now"/>
+               </form>
+            </div>
 
-       <form method="post">
-           {% csrf_token %}
-           {{ form }}
-           <input type="submit" value="Pay now"/>
-       </form>
+
+        </div>
     </div>
+
+
 
 {% endblock %}
