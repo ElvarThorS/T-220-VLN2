@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container text-center" id="payment-info">
         <h4 class="text-center">Checkout on item:  {{ item.name }}</h4>
-        <p class="text-center"><span onclick="history.back()" style="cursor: pointer">Contact information</span> > <u>Payment</u> > Review</p>
+        <p class="text-center"><a href="/checkout/{{ item.id }}" class="text-center return-msg">Contact information</a> > <u>Payment</u> > Review</p>
         <div class="container-fluid bg-light text-dark border border-secondary rounded p-4 w-25">
             <form method="post">
                 {% csrf_token %}
@@ -10,6 +10,6 @@
                 <input type="submit" class="btn btn-primary mt-2" value="Continue to review">
             </form>
         </div>
-        <a onclick="history.back()" class="text-center return-msg">return to contact information</a>
+        <a href="/checkout/{{ item.id }}" class="text-center return-msg">return to contact information</a>
     </div>
 {% endblock %}
