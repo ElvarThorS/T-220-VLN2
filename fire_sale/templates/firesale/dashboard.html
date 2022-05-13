@@ -6,7 +6,9 @@
     <h4>{{title}}</h4>
     <div class="items">
         {% for item, price in offers.items %}
+          {% if item.is_open %}
           {% include 'firesale/single_item.html' with item=item price=price %}
+          {% endif %}
         {% endfor %}
     </div>
 </div>

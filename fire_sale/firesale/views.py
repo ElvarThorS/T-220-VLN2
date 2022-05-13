@@ -236,7 +236,7 @@ def checkout(request, item_id):
         if 'action' in post and 'offer_id' in post:
             action = post['action']
             offer_id = post['offer_id']
-            offer = Offer.objects.filter(id=offer_id).first()
+            offer = Offer.objects.filter(id=offer_id).first() #the accepted offer if accept was pressed
             offerer = User.objects.filter(id=offer.user_offering.id).first()
 
             if action == 'accept':
@@ -246,6 +246,10 @@ def checkout(request, item_id):
                     reject_msg = Message(to=User.objects.filter(id=rejection.user_offering.id).first(), message=f'Your offer on {item.name} has been rejected!')
                     reject_msg.save()
                 accept_msg.save()
+                offer.is_accepted = True
+                offer.item.is_open = False;
+                offer.save()
+                offer.item.save()
             elif action == 'reject':
                 reject_msg = Message(to=offerer, message=f'Your offer on {item.name} has been rejected!')
                 reject_msg.save()
