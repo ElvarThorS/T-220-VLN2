@@ -18,33 +18,37 @@
             <ul class="list-group">
                 {% for offer in offers %}
                     <!-- Hér er hægt að geta lista yfir tilboð -->
-                    <li class="list-group-item message">
+                    <li class="list-group-item message m-1 rounded">
                         {% csrf_token %}
+                        {{ offer.user_offering }}<br>
                         Offer: {{ offer }}<br>
-                        <button id="accept-btn" type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer.id }}, true)">Accept</button>
-                        <button id="reject-btn" type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer.id }}, false)">Reject</button>
-
+                        <button id="bool-btn" type="button" class="btn btn-outline-success" onclick="send_offer_msg({{ offer.id }}, true)">Accept</button>
+                        <button id="bool-btn" type="button" class="btn btn-outline-danger" onclick="send_offer_msg({{ offer.id }}, false)">Reject</button>
                     </li>
                 {% endfor %}
             </ul>
             <script type="text/javascript">
-              function send_offer_msg(offer_id, accept) {
-                const xhr = new XMLHttpRequest();
+                function send_offer_msg(offer_id, accept) {
+                    document.getElementById('bool-btn').style.display = "none";
+                    const xhr = new XMLHttpRequest();
 
-                xhr.open('POST', '/checkout/{{item.id}}/');
-                //xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                /*const data = {
-                  'offer_id': offer_id,
-                  'action': accept ? 'accept': 'reject'
-                }*/
+                    xhr.open('POST', '/checkout/{{item.id}}/');
+                    //xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    /*const data = {
+                        'offer_id': offer_id,
+                        'action': accept ? 'accept': 'reject'
+                    }*/
 
-                const action = accept ? 'accept' : 'reject';
+                    const action = accept ? 'accept' : 'reject';
 
 
-                const data = "action=" + action + '&offer_id=' + offer_id;
-                xhr.send(data);
-                window.location.href = '/my-items';
+                    const data = "action=" + action + '&offer_id=' + offer_id;
+                    xhr.send(data);
+                    setTimeout(() => {  go_to_my_items(); },300);
+              }
+              function go_to_my_items() {
+                  window.location.href = '/my-items';
               }
 
             </script>
