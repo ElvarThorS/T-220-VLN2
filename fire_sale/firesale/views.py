@@ -181,14 +181,15 @@ def edit_profile(request, id):
         print("INSTANCE:", instance)
         instance.user_image = new_image
         instance.user_image_id = new_image.id
-
+        instance.name = request.POST['name']
+        instance.bio = request.POST['bio']
         instance.save()
 
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
     form = UpdatePersonalForm(data={
         'name': personal_info.name,
         'bio': personal_info.bio,
-        'user_image': personal_info.user_image.url
+        'image': personal_info.user_image.url
     })
 
     user_image = Image.objects.filter(id=personal_info.user_image_id).first()
