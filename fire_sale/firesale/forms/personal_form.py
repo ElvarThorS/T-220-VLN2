@@ -15,7 +15,6 @@ class PersonalForm(ModelForm):
             #'user_image_id': widgets.TextInput(attrs={'class': 'form-control'}),
         }
 
-
 class UpdatePersonalForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UpdatePersonalForm, self).__init__(*args, **kwargs)
@@ -25,12 +24,13 @@ class UpdatePersonalForm(ModelForm):
         self.fields['house_number'].widget = forms.HiddenInput()
         self.fields['postal_code'].widget = forms.HiddenInput()
         self.fields['payment_info'].widget = forms.HiddenInput()
+        self.fields['user_image'].widget = forms.HiddenInput()
 
-    #image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = PersonalInformation
         exclude = ['id', 'auth_user_id']
         widgets = {
             'name': widgets.TextInput(attrs={'class': 'form-control'}),
-            'bio': widgets.Textarea(attrs={'class': 'form-control'})
+            'bio': widgets.Textarea(attrs={'class': 'form-control'}),
         }

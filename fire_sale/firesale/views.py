@@ -154,22 +154,30 @@ def my_items(request):
 
 @login_required
 def edit_profile(request, id):
-    instance = get_object_or_404(PersonalInformation, auth_user_id=id)
+
     if request.method == 'POST':
-        form = UpdatePersonalForm(data=request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-        #print(1)
-    else:
-        form = UpdatePersonalForm(instance=instance)
+        instance = get_object_or_404(PersonalInformation, auth_user_id=id)
+        new_image = Image(url=request.POST['image'])
+        new_image.save()
+        print("INSTANCE:", instance)
+        instance.user_image = new_image
+        instance.user_image_id = new_image.id
+
+        instance.save()
+
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+    form = UpdatePersonalForm(data={
+        'name': personal_info.name,
+        'bio': personal_info.bio,
+        'user_image': personal_info.user_image.url
+    })
+
     user_image = Image.objects.filter(id=personal_info.user_image_id).first()
     return render(request, 'firesale/edit_profile.html', {
         'personal_info': personal_info,
         'form': form,
         'id': id,
-        'user_image':user_image
+        'user_image': user_image
     })
 
 
