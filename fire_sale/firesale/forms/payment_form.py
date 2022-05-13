@@ -11,6 +11,6 @@ class PaymentForm(ModelForm):
         widgets = {
             'card_holder_name': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter cardholder name'}),
             'card_number': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxx-xxxx-xxxx-xxxx'}),
-            'expiration_date': DateInput(),
+            'expiration_date': DateInput(format=('%Y-%m-%d'), attrs={'class': 'form-control','type':'date'}),
             'cvc': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter CVC'}),
         }
