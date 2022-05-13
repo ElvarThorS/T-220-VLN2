@@ -28,14 +28,6 @@
                 {% endfor %}
             </ul>
             <script type="text/javascript">
-
-                document.getElementById("accept-btn").onclick = function () {
-                    location.href = "{% url 'dashboard' %}";
-                };
-                document.getElementById("reject-btn").onclick = function () {
-                    location.href = "{% url 'dashboard' %}";
-                };
-
               function send_offer_msg(offer_id, accept) {
                 const xhr = new XMLHttpRequest();
 
@@ -52,7 +44,9 @@
 
                 const data = "action=" + action + '&offer_id=' + offer_id;
                 xhr.send(data);
+                window.location.href = '/my-items';
               }
+
             </script>
         </div>
     {% else %}
