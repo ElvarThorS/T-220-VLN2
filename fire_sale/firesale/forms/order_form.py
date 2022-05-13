@@ -16,5 +16,5 @@ class OrderForm(ModelForm):
         widgets = {
             'item': widgets.TextInput(attrs={'class': 'form-control'}),
             'buyer': widgets.TextInput(attrs={'class': 'form-control'}),
-            'rating': widgets.FloatInput(attrs={'class': 'form-control'}),
+            'rating': widgets.NumberInput(attrs={'class': 'form-control'}),
         }
