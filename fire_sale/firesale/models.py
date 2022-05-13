@@ -31,6 +31,7 @@ class PersonalInformation(models.Model):
     user_image = models.ForeignKey(Image, on_delete=models.CASCADE, default=None, blank=True)
     street_name = models.CharField(max_length=255, blank=True)
     house_number = models.IntegerField(blank=True, default=None)
+    city = models.CharField(max_length=255, blank=True)
     country = models.CharField(max_length=255, blank=True, default='ISL')
     postal_code = models.IntegerField(blank=True, default=None)
     payment_info = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True, default=None)
