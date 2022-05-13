@@ -77,6 +77,7 @@ def dashboard(request):
             'condition': post['condition'],
             'image': post['image'],
             'seller': autouser,
+            'is_open': True,
         })
         if form.is_valid():
             item = form.save()
