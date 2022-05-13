@@ -24,6 +24,7 @@ class UpdatePersonalForm(ModelForm):
         self.fields['street_name'].widget = forms.HiddenInput()
         self.fields['house_number'].widget = forms.HiddenInput()
         self.fields['postal_code'].widget = forms.HiddenInput()
+        self.fields['payment_info'].widget = forms.HiddenInput()
 
     #image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:

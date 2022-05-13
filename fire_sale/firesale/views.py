@@ -284,10 +284,18 @@ def payment_information(request, item_id):
             payment = PaymentForm(data=post)
             print("PAYMENT:", payment)
             if payment.is_valid():
-                payment.save()
-            ## Kóði hér...
+                saved = payment.save()
+                print("SAVED:", saved)
+                personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()
+                personal_info.payment_info_id = saved.id
+                personal_info.save()
+                return redirect('/review/' + item_id + '/')
+            else:
+                print("INVALID")
+                return redirect(f'/payment-information/{item_id}/')
 
-            return redirect('/review/' + item_id + '/')
+
+
 
     item = Item.objects.filter(id=item_id).first()
     personal_info = PersonalInformation.objects.filter(auth_user_id=request.user.id).first()

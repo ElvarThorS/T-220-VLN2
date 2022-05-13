@@ -32,7 +32,7 @@ class PersonalInformation(models.Model):
     house_number = models.IntegerField(blank=True, default=None)
     country = models.CharField(max_length=255, blank=True, default='ISL')
     postal_code = models.IntegerField(blank=True, default=None)
-    payment_info = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    payment_info = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True, default=None)
 
 
 class Item(models.Model):
