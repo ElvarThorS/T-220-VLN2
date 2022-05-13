@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h4 class="text-center">Review</h4>
+    <h4 class="text-center">Checkout on item: {{ item.name }}</h4>
     <p class="text-center"><a href="/checkout/{{ item.id }}" class="text-center return-msg">Contact information</a> > <a  href="/payment-information/{{ item.id }}" class="text-center return-msg">Payment</a> > <u>Review</u></p>
     <div class="d-flex justify-content-center m-auto">
         <div class="review-item bg-white">
@@ -32,8 +32,11 @@
             <div class="review-form-container">
                 <form method="post">
                    {% csrf_token %}
-                   {{ form }}
-                   <input type="submit" value="Pay now"/>
+                    <div class="d-inline-block">
+                        {{ form }}
+
+                    </div>
+                    <input class="btn btn-outline-primary d-inline-block mb-1" type="submit" value="Pay now"/>
                </form>
             </div>
 
